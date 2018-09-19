@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE taglib PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN" "http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd">
+<taglib>
+	<tlib-version>1.2</tlib-version>
+	<jsp-version>2.0</jsp-version>
+	<short-name>Paginator</short-name>
+	<uri>http://www.netqin.com</uri>
+	<display-name>开发平台标签库-平台公共标签</display-name>
+	<description>
+		<![CDATA[Display Paginator information.]]>
+	</description>
+
+	<!-- select下拉框 -->
+	<tag>
+		<name>options</name>
+		<tag-class>com.lkmotion.coreplatform.web.common.util.taglib.SelectOptions</tag-class>
+		<body-content>JSP</body-content>
+		<display-name>SelectOptions</display-name>
+		<attribute>
+			<name>po</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>showtext</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>truevalue</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+            <name>filter</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+		<attribute>
+            <name>order</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+			<name>value</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	
+	
+
+	<!-- 打印出所有messages文件中配置的列表 -->
+	<tag>
+	<name>messageOptions</name>
+		<tag-class>com.lkmotion.coreplatform.web.common.util.taglib.MessageOptions</tag-class>
+		<body-content>JSP</body-content>
+		<display-name>messageOptions</display-name>
+		<attribute>
+			<name>key</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>selected</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>exclude</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<!-- 打印出spring messages -->
+	<tag>
+		<name>springMessage</name>
+		<tag-class>com.lkmotion.coreplatform.web.common.util.taglib.SpringMessage</tag-class>
+		<body-content>JSP</body-content>
+		<display-name>springMessage</display-name>
+		<attribute>
+			<name>code</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+
+
+
+	
+	<!-- 显示值 -->
+	<tag>
+		<name>write</name>
+		<tag-class>com.lkmotion.coreplatform.web.common.util.taglib.Write</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<name>po</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+            <name>truevalue</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+			<name>showtext</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>value</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+        <attribute>
+            <name>type</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+	</tag>
+
+</taglib>
