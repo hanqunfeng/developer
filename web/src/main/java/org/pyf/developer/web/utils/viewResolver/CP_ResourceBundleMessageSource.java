@@ -92,8 +92,8 @@ public class CP_ResourceBundleMessageSource extends ResourceBundleMessageSource 
                 new DefaultResourceLoader());
         Resource[] res = null;
 
-        //String rootpath = resolver.getClassLoader().getResource("//").toURI()
-        String rootpath = resolver.getClass().getResource("/").toURI()
+        //String rootpath = resolver.getClassLoader().getResource("//").toURI() // jar包下不能访问，war包不受影响
+        String rootpath = resolver.getClass().getResource("/").toURI() //这种方式jar和war都支持
                 .toString();
 
         log.info("starting to find resource with pattern ["
