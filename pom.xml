@@ -13,7 +13,6 @@
         <module>web</module>
         <module>service-impl-jpa</module>
         <module>utils</module>
-        <module>codeGenerator</module>
     </modules>
     <packaging>pom</packaging>
 

@@ -93,7 +93,8 @@ public class CP_ResourceBundleViewResolver extends ResourceBundleViewResolver im
                 new DefaultResourceLoader());
         Resource[] res = null;
 
-        String rootpath = resolver.getClassLoader().getResource("//").toURI()
+        //String rootpath = resolver.getClassLoader().getResource("//").toURI()
+        String rootpath = resolver.getClass().getResource("/").toURI()
                 .toString();
 
         log.info("starting to find resource with pattern ["

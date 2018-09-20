@@ -105,22 +105,18 @@
         </dependency>
 
 
+        <!-- https://mvnrepository.com/artifact/org.springframework/springloaded -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>springloaded</artifactId>
+            <version>1.2.8.RELEASE</version>
+            <scope>provided</scope>
+        </dependency>
+
+
     </dependencies>
 
     <build>
-
-        <!--<resources>-->
-            <!--&lt;!&ndash; 打包时将jsp文件拷贝到META-INF目录下 &ndash;&gt;-->
-            <!--<resource>-->
-                <!--&lt;!&ndash; 指定resources插件处理哪个目录下的资源文件 &ndash;&gt;-->
-                <!--<directory>src/main/webapp</directory>-->
-                <!--&lt;!&ndash;注意此次必须要放在此目录下才能被访问到 &ndash;&gt;-->
-                <!--<targetPath>META-INF/resources</targetPath>-->
-                <!--<includes>-->
-                    <!--<include>**/**</include>-->
-                <!--</includes>-->
-            <!--</resource>-->
-        <!--</resources>-->
 
 
         <plugins>
@@ -137,7 +133,6 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <fork>true</fork>
-
                 </configuration>
             </plugin>
 
@@ -157,7 +152,58 @@
             </plugin>
 
 
+            <!-- spring jsp jar 目前不被支持了-->
+            <!--<plugin>-->
+                <!--<groupId>org.springframework.boot</groupId>-->
+                <!--<artifactId>spring-boot-maven-plugin</artifactId>-->
+                <!--&lt;!&ndash;<version>1.4.2.RELEASE</version>&ndash;&gt;-->
+                <!--<configuration>-->
+                    <!--<mainClass>org.pyf.developer.WebApplication</mainClass>-->
+                <!--</configuration>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<goals>-->
+                            <!--<goal>repackage</goal>-->
+                        <!--</goals>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+                <!--<dependencies>-->
+                    <!--&lt;!&ndash; spring热部署 &ndash;&gt;-->
+                    <!--<dependency>-->
+                        <!--<groupId>org.springframework</groupId>-->
+                        <!--<artifactId>springloaded</artifactId>-->
+                        <!--<version>1.2.8.RELEASE</version>-->
+                    <!--</dependency>-->
+                <!--</dependencies>-->
+            <!--</plugin>-->
+            <!--&lt;!&ndash; 忽略无web.xml警告 &ndash;&gt;-->
+            <!--<plugin>-->
+                <!--<groupId>org.apache.maven.plugins</groupId>-->
+                <!--<artifactId>maven-war-plugin</artifactId>-->
+                <!--<configuration>-->
+                    <!--<failOnMissingWebXml>false</failOnMissingWebXml>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
         </plugins>
+        <!--<resources>-->
+            <!--&lt;!&ndash; 打包时将jsp文件拷贝到META-INF目录下 &ndash;&gt;-->
+            <!--<resource>-->
+                <!--&lt;!&ndash; 指定resources插件处理哪个目录下的资源文件 &ndash;&gt;-->
+                <!--<directory>src/main/webapp</directory>-->
+                <!--&lt;!&ndash;注意此次必须要放在此目录下才能被访问到 &ndash;&gt;-->
+                <!--<targetPath>META-INF/resources</targetPath>-->
+                <!--<includes>-->
+                    <!--<include>**/**</include>-->
+                <!--</includes>-->
+            <!--</resource>-->
+            <!--<resource>-->
+                <!--<directory>src/main/resources</directory>-->
+                <!--<includes>-->
+                    <!--<include>**/**</include>-->
+                <!--</includes>-->
+                <!--<filtering>false</filtering>-->
+            <!--</resource>-->
+        <!--</resources>-->
     </build>
 
 </project>
