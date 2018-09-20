@@ -10,18 +10,32 @@
 	OF ANY KIND, either express or implied. See the License for the specific 
 	language governing permissions and limitations under the License. -->
 <!-- The contents of this file will be loaded for each web application -->
-<Context path="/webmvc" reloadable="false" allowLinking="true">
+<Context path="/web" reloadable="false">
 
 	<!-- Default set of monitored resources rnd-->
 	<WatchedResource>WEB-INF/web.xml</WatchedResource>
 
+	<Resources cachingAllowed="true" cacheMaxSize="100000" />
+	<Resources allowLinking="true" />
 
 
-	<!--<Resource driverClassName="com.p6spy.engine.spy.P6SpyDriver"-->
+
+	<!--<Resource driverClassName="com.mysql.jdbc.Driver"-->
 			  <!--logAbandoned="true" maxActive="100" maxIdle="30" maxWait="10000"-->
 			  <!--name="jdbc/mysql" password="cp2015" removeAbandoned="true"-->
 			  <!--removeAbandonedTimeout="300" type="javax.sql.DataSource"-->
-			  <!--url="jdbc:mysql://localhost:3306/cp2015DB?useUnicode=true&amp;characterEncoding=utf-8" username="cp2015" />-->
+			  <!--url="jdbc:mysql://localhost:3306/cp2015DB?useUnicode=true&amp;characterEncoding=utf-8" username="cp2015"-->
+			  <!--factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"/>-->
+
+	<Resource driverClassName="com.mysql.jdbc.Driver"
+			  logAbandoned="true" maxActive="100"  maxWait="60000"
+			  name="jdbc/mysql" password="cp2015" removeAbandoned="true"
+			  removeAbandonedTimeout="300" type="javax.sql.DataSource"
+			  url="jdbc:mysql://localhost:3306/cp2015DB?useUnicode=true&amp;characterEncoding=utf-8" username="cp2015"
+			  factory="com.alibaba.druid.pool.DruidDataSourceFactory"
+			  filters="stat,wall,slf4j" testOnBorrow="false" testOnReturn="false" testWhileIdle="true"
+			  validationQuery="SELECT 1 FROM DUAL" initialSize="5" minIdle="5"
+			  timeBetweenEvictionRunsMillis="60000" minEvictableIdleTimeMillis="300000" poolPreparedStatements="true" maxOpenPreparedStatements="20"/>
 
 
 
