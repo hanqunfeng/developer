@@ -139,7 +139,9 @@ public class CP_OperateLogInterceptor implements HandlerInterceptor {
         }
 
         logger.setLogUser(userName.getUserName());
-        service.add(logger);
+        if(userName.getUserName()!=null && !"anonymousUser".equals(userName.getUserName())) {
+            service.add(logger);
+        }
     }
 
     /**

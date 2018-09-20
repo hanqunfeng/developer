@@ -62,17 +62,19 @@ public class DynamicRoleVoter extends SimpleBaseUserInfoService implements
 		Set<SimpleGrantedAuthority> authorities = null;
 		String userId = authentication.getName();
 		//获得当前用户的可访问资源，自定义的查询方法，之后和当前请求资源进行匹配，成功则放行，否则拦截	
-		authorities = loadUserAuthorities(userId);
-		Map<String, Set<String>> urlAuths = authService.getUrlAuthorities();
-		Set<String> keySet = urlAuths.keySet();
-		for (String key : keySet) {
-			boolean matched = pathMatcher.match(key, url);
-			if (!matched)
-				continue;
-			Set<String> mappedAuths = urlAuths.get(key);
-			if (contain(authorities, mappedAuths)) {
-				result = ACCESS_GRANTED;
-				break;
+		if(userId!=null && !"anonymousUser".equals(userId)) {
+			authorities = loadUserAuthorities(userId);
+			Map<String, Set<String>> urlAuths = authService.getUrlAuthorities();
+			Set<String> keySet = urlAuths.keySet();
+			for (String key : keySet) {
+				boolean matched = pathMatcher.match(key, url);
+				if (!matched)
+					continue;
+				Set<String> mappedAuths = urlAuths.get(key);
+				if (contain(authorities, mappedAuths)) {
+					result = ACCESS_GRANTED;
+					break;
+				}
 			}
 		}
 		return result;
