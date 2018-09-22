@@ -47,7 +47,7 @@ public class RenameCommand extends AbstractJsonCommand implements ElfinderComman
         VolumeHandler volumeHandler = findTarget(elfinderStorage, target);
         String filepath = volumeHandler.getTarget().toString();
         if(filepath.contains("_sharefile_to_all_")){
-            json.put(ElFinderConstants.ELFINDER_JSON_RESPONSE_ERROR, "can't delete,because only read!");
+            json.put(ElFinderConstants.ELFINDER_JSON_RESPONSE_ERROR, "can't rename,because only read!");
         }else {
             VolumeHandler destination = new VolumeHandler(volumeHandler.getParent(), newName);
             volumeHandler.renameTo(destination);
