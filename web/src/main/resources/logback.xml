@@ -33,7 +33,19 @@
         <appender-ref ref="FILE" />
     </root>
 
-    <logger name="org.springframework" level="INFO" />
+    <logger name="org.springframework" level="INFO">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="FILE" />
+    </logger>
     <logger name="com.alibaba.druid" level="INFO" />
+    <logger name="druid.sql" level="INFO"/>
+    <logger name="druid.sql.DataSource" level="INFO"/>
+    <!--打印链接状态，事务-->
+    <logger name="druid.sql.Connection" level="INFO"/>
+    <!--打印可以执行的sql DEBUG-->
+    <logger name="druid.sql.Statement" level="DEBUG"/>
+    <!--打印执行结果-->
+    <logger name="druid.sql.ResultSet" level="INFO"/>
+
     <!--<logger name="org.hibernate" level="INFO" />-->
 </configuration>

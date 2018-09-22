@@ -1,80 +1,229 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: hanqf
-  Date: 2018/8/8
-  Time: 16:09
-  To change this template use File | Settings | File Templates.
---%>
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
-    <meta charset="utf-8">
-    <title>elFinder 2.1</title>
 
-    <script src="webjars/jquery/1.12.4/jquery.min.js"></script>
+    <!-- elFinder CSS (REQUIRED) -->
+    <link rel="stylesheet" type="text/css" href="${_contextPath}/resource/elfinder/css/theme.css">
 
-<!-- jQuery and jQuery UI (REQUIRED) -->
-<link rel="stylesheet" type="text/css" href="${_contextPath}/resource/css/elfinder/jquery-ui.min.css">
-<script src="${_contextPath}/resource/js/elfinder/jquery-ui.min.js"></script>
+    <script src="${_contextPath}/resource/elfinder/js/jquery-1.11.1.js"></script>
 
-<!-- elFinder JS AND CSS (REQUIRED) -->
-<script src="${_contextPath}/resource/js/elfinder/elfinder.full.js" type="text/javascript" charset="utf-8"></script>
-<link rel="stylesheet" href="${_contextPath}/resource/css/elfinder/elfinder.full.css" type="text/css" media="screen" charset="utf-8">
-<link rel="stylesheet" type="text/css" href="${_contextPath}/resource/css/elfinder/theme.css">
+    <!-- elFinder JS (REQUIRED) -->
+    <script src="${_contextPath}/resource/elfinder/js/elfinder.full.js"></script>
 
-<!-- elFinder translation (OPTIONAL) -->
-<script src="${_contextPath}/resource/js/elfinder/i18n/elfinder.zh_CN.js"></script>
+    <!-- elFinder translation (OPTIONAL) -->
+    <script src="${_contextPath}/resource/elfinder/js/i18n/elfinder.zh_CN.js"></script>
 
-<%--<!-- jQuery and jQuery UI (REQUIRED) -->--%>
-<%--<link rel="stylesheet" type="text/css" href="webjars/jquery-ui-themes/1.11.4/smoothness/jquery-ui.min.css">--%>
+    <script src="${_contextPath}/resource/elfinder/js/extras/quicklook.googledocs.js"></script>
 
-<%--<script src="webjars/jquery-ui/1.11.4/jquery-ui.min.js"></script>--%>
+    <script src="${_contextPath}/resource/elfinder/ace/ace.js" type="text/javascript" charset="utf-8"></script>
 
-<%--<!-- elFinder CSS (REQUIRED) -->--%>
-<%--<link rel="stylesheet" type="text/css" href="webjars/elfinder/2.1.11/css/elfinder.min.css">--%>
-<%--<link rel="stylesheet" type="text/css" href="webjars/elfinder/2.1.11/css/theme.css">--%>
+    <script src="${_contextPath}/resource/elfinder/ace/ext-modelist.js" type="text/javascript" charset="utf-8"></script>
 
-<%--<!-- elFinder JS (REQUIRED) -->--%>
-<%--<script src="webjars/elfinder/2.1.11/js/elfinder.min.js"></script>--%>
+    <script src="${_contextPath}/resource/elfinder/ace/ext-settings_menu.js"></script>
 
-<%--<!-- elFinder translation (OPTIONAL) -->--%>
-<%--<script src="webjars/elfinder/2.1.11/js/i18n/elfinder.zh_CN.js"></script>--%>
+    <script src="${_contextPath}/resource/elfinder/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
 
-<script type="text/javascript" charset="utf-8">
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function() {
+            elFinder.prototype.loadCss('${_contextPath}/resource/elfinder/jquery-ui-1.12.1.custom/jquery-ui.css');
+            $('#elfinder').elfinder({
+                url : '${_contextPath}/elfinder/connector.do?flag=${flag}',
+                lang: 'zh_CN',
+                height : window.innerHeight-20,
+                commandsOptions: {
+                    edit: {
+                        editors : [
+                            {
+                                info:{
+                                    name:'编辑',
+                                    urlAsContent: false
+                                },
+                                // ACE Editor
+                                // `mimes` is not set for support everything kind of text file
+                                load : function(textarea) {
+                                    var self = this,
+                                        dfrd = $.Deferred(),
+                                        cdn  = '${_contextPath}/resource/elfinder/ace/',
+                                        init = function() {
+                                            if (typeof ace === 'undefined') {
+                                                console.log(cdn);
+                                                this.fm.loadScript([
+                                                    cdn+'/ace.js',
+                                                    cdn+'/ext-modelist.js',
+                                                    cdn+'/ext-settings_menu.js',
+                                                    cdn+'/ext-language_tools.js'
+                                                ], start);
+                                            } else {
+                                                start();
+                                            }
+                                        },
+                                        start = function() {
+                                            var editor, editorBase, mode,
+                                                ta = $(textarea),
+                                                taBase = ta.parent(),
+                                                dialog = taBase.parent(),
+                                                id = textarea.id + '_ace',
+                                                ext = self.file.name.replace(/^.+\.([^.]+)|(.+)$/, '$1$2').toLowerCase(),
+                                                // MIME/mode map
+                                                mimeMode = {
+                                                    'text/x-php'              : 'php',
+                                                    'application/x-php'       : 'php',
+                                                    'text/html'               : 'html',
+                                                    'application/xhtml+xml'   : 'html',
+                                                    'text/javascript'         : 'javascript',
+                                                    'application/javascript'  : 'javascript',
+                                                    'text/css'                : 'css',
+                                                    'text/x-c'                : 'c_cpp',
+                                                    'text/x-csrc'             : 'c_cpp',
+                                                    'text/x-chdr'             : 'c_cpp',
+                                                    'text/x-c++'              : 'c_cpp',
+                                                    'text/x-c++src'           : 'c_cpp',
+                                                    'text/x-c++hdr'           : 'c_cpp',
+                                                    'text/x-shellscript'      : 'sh',
+                                                    'application/x-csh'       : 'sh',
+                                                    'text/x-python'           : 'python',
+                                                    'text/x-java'             : 'java',
+                                                    'text/x-java-source'      : 'java',
+                                                    'text/x-ruby'             : 'ruby',
+                                                    'text/x-perl'             : 'perl',
+                                                    'application/x-perl'      : 'perl',
+                                                    'text/x-sql'              : 'sql',
+                                                    'text/xml'                : 'xml',
+                                                    'application/docbook+xml' : 'xml',
+                                                    'application/xml'         : 'xml'
+                                                };
 
-    $(document).ready(function() {
-        $('#elfinder').elfinder({
-            url : 'elfinder-servlet/connector',
-            lang: 'zh_CN',                   // language (OPTIONAL)
-            height: 680,
-            // rememberLastDir: false,
-            // reloadClearHistory: true,
-            // useBrowserHistory: false,
-            // commands: [
-            //     'editimage','archive', 'back', 'chmod',  'copy', 'cut', 'download', 'duplicate', 'edit', 'extract',
-            //     'forward', 'fullscreen', 'getfile', 'home', 'info', 'mkdir', 'mkfile', 'netmount', 'netunmount',
-            //     'open', 'opendir', 'paste', 'places', 'quicklook', 'reload', 'rename', 'resize', 'restore', 'rm',
-            //     'sort', 'up', 'upload', 'view'
-            // ],
-            // contextmenu: {
-            //     // navbarfolder menu
-            //     navbar: ['editimage', 'open', '|', 'mkdir', 'rename', 'rm', '|', 'info'],
-            //     // current directory menu
-            //     cwd: ['editimage', 'reload', 'back', 'rename', '|', 'upload', 'mkdir', 'mkfile', 'paste', '|', 'sort', '|', 'info'],
-            //     // current directory file menu
-            //     files: ['editimage', 'open', 'getfile', '|', 'custom', 'quicklook', '|', 'download', 'rm', '|', 'rename', 'resize', '|', 'archive', 'extract', '|', 'info']
-            // }
+                                            // set basePath of ace
+                                            ace.config.set('basePath', cdn);
+
+                                            // set base height
+                                            taBase.height(taBase.height());
+
+                                            // detect mode
+                                            mode = ace.require('ace/ext/modelist').getModeForPath('/' + self.file.name).name;
+                                            if (mode === 'text') {
+                                                if (mimeMode[self.file.mime]) {
+                                                    mode = mimeMode[self.file.mime];
+                                                }
+                                            }
+
+                                            // show MIME:mode in title bar
+                                            taBase.prev().children('.elfinder-dialog-title').append(' (' + self.file.mime + ' : ' + mode.split(/[\/\\]/).pop() + ')');
+
+                                            // TextArea button and Setting button
+                                            $('<div class="ui-dialog-buttonset"/>').css('float', 'left')
+                                                .append(
+                                                    $('<button>文本框</button>')
+                                                        .button()
+                                                        .on('click', function(){
+                                                            if (ta.data('ace')) {
+                                                                ta.removeData('ace');
+                                                                editorBase.hide();
+                                                                ta.val(editor.session.getValue()).show().focus();
+                                                                $(this).text('编辑器');
+                                                            } else {
+                                                                ta.data('ace', true);
+                                                                editorBase.show();
+                                                                editor.setValue(ta.hide().val(), -1);
+                                                                editor.focus();
+                                                                $(this).text('文本框');
+                                                            }
+                                                        })
+                                                )
+                                                .append(
+                                                    $('<button>Ace editor setting</button>')
+                                                        .button({
+                                                            icons: {
+                                                                primary: 'ui-icon-gear',
+                                                                secondary: 'ui-icon-triangle-1-e'
+                                                            },
+                                                            text: false
+                                                        })
+                                                        .on('click', function(){
+                                                            editor.showSettingsMenu();
+                                                        })
+                                                )
+                                                .prependTo(taBase.next());
+
+                                            // Base node of Ace editor
+                                            editorBase = $('<div id="'+id+'" style="width:100%; height:100%;"/>').text(ta.val()).insertBefore(ta.hide());
+
+                                            // Ace editor configure
+                                            ta.data('ace', true);
+                                            editor = ace.edit(id);
+                                            ace.require('ace/ext/language_tools');
+                                            ace.require('ace/ext/settings_menu').init(editor);
+                                            editor.$blockScrolling = Infinity;
+                                            editor.setOptions({
+                                                theme: 'ace/theme/dawn',
+                                                mode: 'ace/mode/' + mode,
+                                                fontSize: '14px',
+                                                wrap: true,
+                                                enableBasicAutocompletion: true,
+                                                enableSnippets: true,
+                                                enableLiveAutocompletion: true
+                                            });
+                                            editor.commands.addCommand({
+                                                name : "saveFile",
+                                                bindKey: {
+                                                    win : 'Ctrl-s',
+                                                    mac : 'Command-s'
+                                                },
+                                                exec: function(editor) {
+                                                    self.doSave();
+                                                }
+                                            });
+                                            editor.commands.addCommand({
+                                                name : "closeEditor",
+                                                bindKey: {
+                                                    win : 'Ctrl-w|Ctrl-q',
+                                                    mac : 'Command-w|Command-q'
+                                                },
+                                                exec: function(editor) {
+                                                    self.doCancel();
+                                                }
+                                            });
+
+                                            editor.resize();
+
+                                            dfrd.resolve(editor);
+                                        };
+
+                                    // init & start
+                                    init();
+
+                                    return dfrd;
+                                },
+                                close : function(textarea, instance) {
+                                    if (instance) {
+                                        instance.destroy();
+                                        $(textarea).show();
+                                    }
+                                },
+                                save : function(textarea, instance) {
+                                    instance && $(textarea).data('ace') && (textarea.value = instance.session.getValue());
+                                },
+                                focus : function(textarea, instance) {
+                                    instance && $(textarea).data('ace') && instance.focus();
+                                },
+                                resize : function(textarea, instance, e, data) {
+                                    instance && instance.resize();
+                                }
+                            }
+                        ]
+                    },
+//                    quicklook : {
+//                        // to enable preview with Google Docs Viewer
+//                        googleDocsMimes : ['application/pdf', 'image/tiff', 'application/vnd.ms-office', 'application/msword', 'application/vnd.ms-word', 'application/vnd.ms-excel', 'application/vnd.ms-powerpoint', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']
+//                    }
+                }
+            });
         });
-    });
-</script>
+    </script>
 </head>
-
 <body>
 
-<!-- Element where elFinder will be created (REQUIRED) -->
 <div id="elfinder"></div>
 
 </body>
 </html>
-
-

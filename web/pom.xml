@@ -113,6 +113,12 @@
             <scope>provided</scope>
         </dependency>
 
+        <dependency>
+            <artifactId>developer-elfinder</artifactId>
+            <version>0.0.1</version>
+            <groupId>org.pyf</groupId>
+        </dependency>
+
 
     </dependencies>
 

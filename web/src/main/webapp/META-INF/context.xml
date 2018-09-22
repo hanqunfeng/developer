@@ -15,7 +15,7 @@
 	<!-- Default set of monitored resources rnd-->
 	<WatchedResource>WEB-INF/web.xml</WatchedResource>
 
-	<Resources cachingAllowed="true" cacheMaxSize="100000" />
+	<!--<Resources cachingAllowed="true" cacheMaxSize="100000" />-->
 	<Resources allowLinking="true" />
 
 
@@ -37,8 +37,19 @@
 			  validationQuery="SELECT 1 FROM DUAL" initialSize="5" minIdle="5"
 			  timeBetweenEvictionRunsMillis="60000" minEvictableIdleTimeMillis="300000" poolPreparedStatements="true" maxOpenPreparedStatements="20"/>
 
+	<!--去掉过滤器，也并不会使用配置文件中的过滤器-->
+	<!--<Resource driverClassName="com.mysql.jdbc.Driver"-->
+			  <!--logAbandoned="true" maxActive="100"  maxWait="60000"-->
+			  <!--name="jdbc/mysql" password="cp2015" removeAbandoned="true"-->
+			  <!--removeAbandonedTimeout="300" type="javax.sql.DataSource"-->
+			  <!--url="jdbc:mysql://localhost:3306/cp2015DB?useUnicode=true&amp;characterEncoding=utf-8" username="cp2015"-->
+			  <!--factory="com.alibaba.druid.pool.DruidDataSourceFactory"-->
+			  <!--testOnBorrow="false" testOnReturn="false" testWhileIdle="true"-->
+			  <!--validationQuery="SELECT 1 FROM DUAL" initialSize="5" minIdle="5"-->
+			  <!--timeBetweenEvictionRunsMillis="60000" minEvictableIdleTimeMillis="300000" poolPreparedStatements="true" maxOpenPreparedStatements="20"/>-->
 
 
+	<!--名称没变化可以不需要这个配置-->
 	<!--<ResourceLink global="jdbc/mysql" name="jdbc/mysql"-->
 				  <!--type="javax.sql.DataSource" />-->
 
