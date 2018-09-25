@@ -27,10 +27,17 @@
 			  <!--url="jdbc:mysql://localhost:3306/cp2015DB?useUnicode=true&amp;characterEncoding=utf-8" username="cp2015"-->
 			  <!--factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"/>-->
 
+	<!-- removeAbandoned="true"  打开removeAbandoned功能
+		 removeAbandonedTimeout="300" 设置超过300秒未使用则进行回收
+		 logAbandoned="true" 关闭abanded连接时输出错误日志
+		 以上三个配置用于避免连接池泄露，参考：https://github.com/alibaba/druid/wiki/连接泄漏监测-->
 	<Resource driverClassName="com.mysql.jdbc.Driver"
-			  logAbandoned="true" maxActive="100"  maxWait="60000"
-			  name="jdbc/mysql" password="cp2015" removeAbandoned="true"
-			  removeAbandonedTimeout="300" type="javax.sql.DataSource"
+			  maxActive="100"  maxWait="60000"
+			  name="jdbc/mysql" password="cp2015"
+			  removeAbandoned="true"
+			  removeAbandonedTimeout="300"
+			  logAbandoned="true"
+			  type="javax.sql.DataSource"
 			  url="jdbc:mysql://localhost:3306/cp2015DB?useUnicode=true&amp;characterEncoding=utf-8" username="cp2015"
 			  factory="com.alibaba.druid.pool.DruidDataSourceFactory"
 			  filters="stat,wall,slf4j" testOnBorrow="false" testOnReturn="false" testWhileIdle="true"

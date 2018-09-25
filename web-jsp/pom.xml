@@ -4,11 +4,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.pyf</groupId>
-    <artifactId>developer-web</artifactId>
+    <artifactId>developer-web-jsp</artifactId>
     <version>0.0.1</version>
     <packaging>war</packaging>
 
-    <name>developer-web</name>
+    <name>developer-web-jsp</name>
     <description>Demo project for Spring Boot</description>
 
     <parent>
