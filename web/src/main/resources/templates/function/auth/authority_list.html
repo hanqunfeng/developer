@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<header th:replace="common/model::header"></header>
+
+<body>
+<div th:replace="common/model::script"></div>
+
+<div class="row" style="margin:0px;">
+    <div class="col-sm-12" style="padding:0px;">
+        <div class="panel panel-primary" style="margin-bottom:1px;">
+
+
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="icon-list"></i> [[#{authority.list.htitle}]]</h3>
+            </div>
+            <div class="panel-body" style="background-color:#EEEEEE;padding:8px;">
+
+                <link th:href="@{/resource/css/netqin.css}" rel="stylesheet"/>
+                <script type="text/javascript"
+                        th:src="@{|/resource/js/i18n/netqin.list.#{locale}.js|}"></script>
+                <div class="panel panel-info">
+                    <div class="panel panel-heading" style="margin-bottom: 0px;">
+                        <h3 class="panel-title">
+                            <i class="icon-search"></i>
+                            [[#{common.form.search}]]
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+
+
+                        <form class="form-inline" id="queryForm"
+                              th:action="@{/auth/authority/list.do}" method="post" role="form">
+                            <div class="form-group">
+                                <label class="sr-only" for="name">name</label> <input type="text"
+                                                                                      class="form-control" id="name"
+                                                                                      name="name"
+                                                                                      autocomplete=off
+                                                                                      th:value="${queryBean.name}"
+                                                                                      th:placeholder="#{system.auth.name}">
+                            </div>
+                            <div class="form-group">
+                                <label class="sr-only" for="description">description</label> <input
+                                    type="text" class="form-control" id="description"
+                                    name="description" autocomplete=off
+                                    th:value="${queryBean.description}"
+                                    th:placeholder="#{system.auth.desc}">
+                            </div>
+                            <div class="form-group">
+                                <label class="sr-only" for="entrance">entrance</label> <input
+                                    type="text" class="form-control" id="entrance" name="entrance"
+                                    th:value="${queryBean.entrance}" autocomplete=off
+                                    th:placeholder="#{system.auth.entrance}">
+                            </div>
+                            <input type="hidden" name="sortName" id="sortName" th:value="${sorter.sortName}"/>
+                            <input type="hidden" name="sortType" id="sortType" th:value="${sorter.sortType}"/>
+                            <button type="submit" id="submitbtn" class="btn btn-default btn-sm"
+                                    th:text="#{common.submit}"></button>
+                        </form>
+                    </div>
+                </div>
+
+
+                <a th:href="@{/auth/authority/detail.do}"
+                   class="btn btn-success btn-xs">[[#{common.create}]]</a>
+                <button class="btn btn-danger btn-xs" id="delete">[[#{common.delete}]]</button>
+
+                <form id="resultForm" th:action="@{/auth/authority/delete.do}"
+                      method="POST">
+                    <div class="table-responsive">
+                        <table id="resultsTable"
+                               class="table table-striped table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th><input type="checkbox" name="selectAll" id="selectAll"/>[[#{common.choose}]]</th>
+                                <th>[[#{system.auth.name}]]<span style="display: none;">name</span></th>
+                                <th>[[#{system.auth.desc}]]<span style="display: none;">description</span></th>
+                                <th>[[#{system.auth.entrance}]]<span style="display: none;">entrance</span></th>
+                                <th>[[#{system.auth.url}]]<span style="display: none;">url</span></th>
+                                <th>[[#{system.auth.code}]]<span style="display: none;">code</span></th>
+                                <th>[[#{system.auth.order}]]<span style="display: none;">order</span></th>
+                                <th>[[#{common.reserved}]]<span style="display: none;">reserved</span></th>
+                                <th>[[#{common.lastupdate}]]<span style="display: none;">lastupdate</span></th>
+                                <th>[[#{common.operate}]]</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            <tr th:each="item:${results}">
+                                <th><input type="checkbox" th:value="${item.id}" name="ids"/></th>
+                                <td>[[${item.name}]]</td>
+                                <td>[[${item.description}]]</td>
+                                <td>
+                                    [[${item.entrance}]]
+                                </td>
+
+                                <td th:with="resourceHtmlString=${#strings.replace(item.resourceHtmlString,',','<br>')}">
+                                    <span th:utext="${resourceHtmlString}"></span>
+                                </td>
+                                <td>[[${item.code}]]</td>
+
+                                <td>[[${item.order}]]</td>
+                                <td>
+
+                                    <span th:if="${item.reserved}" th:text="#{common.yes}"></span>
+                                    <span th:if="${item.reserved == false}" th:text="#{common.no}"></span>
+
+                                </td>
+                                <td>
+                                    [[${#dates.format(item.lastupdate, 'yyyy-MM-dd HH:mm:ss')}]]
+                                </td>
+                                <td>
+                                    <a th:href="@{/auth/authority/detail.do(id=${item.id})}"
+                                       class="btn btn-info btn-minier">
+
+                                        <span th:if="${item.reserved}" th:text="#{common.view}"></span>
+                                        <span th:if="${item.reserved == false}" th:text="#{common.edit}"></span>
+
+
+                                    </a>
+                                </td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+                <div>
+                    <div>
+                        <div class="row" style="margin:0px;">
+                            <div th:replace="common/pagination::pagination"></div>
+                        </div>
+                        <!-- /.table-responsive -->
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

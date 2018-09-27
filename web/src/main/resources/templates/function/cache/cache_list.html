@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<header th:replace="common/model::header"></header>
+
+
+<body>
+
+<div th:replace="common/model::script"></div>
+
+
+<div class="row" style="margin:0px;">
+    <div class="col-sm-12" style="padding:0px;">
+        <div class="panel panel-primary" style="margin-bottom:1px;">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="icon-list"></i> [[#{cache.htitle}]]</h3>
+            </div>
+            <div class="panel-body" style="background-color:#EEEEEE;padding:8px;">
+
+                <link th:href="@{/resource/css/netqin.css}" rel="stylesheet"/>
+                <script type="text/javascript"
+                        th:src="@{|/resource/js/i18n/netqin.list.#{locale}.js|}"></script>
+
+
+                    <div class="table-responsive" th:if="${currentActiveUserSize != null}">
+                        <table id="resultsTable"
+                               class="table table-striped table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th colspan="2">[[${currentActiveUserSize}]] user(s) are logged in!</th>
+
+                            </tr>
+
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th>user name</th>
+                                <th>last Active</th>
+                            </tr>
+
+                                <tr th:each="item:${activeUsers}">
+                                    <td>[[${item.key.username}]]</td>
+                                    <td>
+                                        [[${#dates.format(item.value, 'yyyy-MM-dd HH:mm:ss')}]]
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                <p>
+                </p>
+                <form id="resultForm" th:action="@{/}" method="POST">
+                    <div class="table-responsive">
+                        <table id="resultsTable"
+                               class="table table-striped table-bordered table-hover">
+                            <thead>
+                            <tr>
+
+                                <th>
+                                    [[#{cache.group.name}]]
+                                </th>
+                                <th>
+                                    [[#{common.operate}]]
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>
+                                    [[#{cache.group.all}]]
+                                </td>
+                                <td><a
+                                        th:href="@{/cache/flush_all.do}"
+                                        class="btn btn-info btn-minier">
+                                    [[#{cache.flush}]]
+                                </a></td>
+                            </tr>
+
+                                <tr th:each="item:${results}">
+                                    <td>[[${item}]]</td>
+                                    <td><a
+                                            th:href="@{/cache/flush_byName.do(cacheName=${item})}"
+                                            class="btn btn-info btn-minier">
+                                        [[#{cache.flush}]]
+                                    </a>
+                                        <a
+                                                th:href="@{/cache/getCacheContent_byName.do(cacheName=${item})}"
+                                                class="btn btn-info btn-minier">List</a>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+
+
+                    <div class="table-responsive" th:if="${cacheName!=null}">
+                        <table id="resultsTable"
+                               class="table table-striped table-bordered table-hover">
+                            <thead>
+                            <tr>
+
+                                <th colspan="4">[[${cacheName}]]</th>
+
+                            </tr>
+                            <tr>
+
+                                <th>Num.</th>
+                                <th>Cache name</th>
+                                <th>Cache content</th>
+                                <th>Operate</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+
+
+                                        <tr th:each="item,status:${cacheMap}" th:if="${cacheMap!=null}">
+                                            <td>[[${status.index}]]</td>
+                                            <td>[[${item.key}]]</td>
+                                            <td>[[${item.value}]]</td>
+                                            <td><a
+                                                    th:href="@{/cache/getCacheContent_byListName.do(cacheName=${cacheName},cacheListName=${item.key})}"
+                                                    class="btn btn-info btn-minier">
+                                                [[#{cache.flush}]]
+                                            </a></td>
+                                        </tr>
+
+
+                                    <th colspan="4" th:if="${cacheMap==null}">[[${cacheName}]] contents is null</th>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                <div>
+                    <div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
+<!-- /.table-responsive -->

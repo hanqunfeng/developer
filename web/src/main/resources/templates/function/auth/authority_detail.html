@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<header th:replace="common/model::header"></header>
+
+<body>
+<div th:replace="common/model::script"></div>
+
+<div class="row" style="margin:0px;">
+    <div class="col-sm-12" style="padding:0px;">
+        <div class="panel panel-primary" style="margin-bottom:1px;">
+
+
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="icon-list"></i> [[#{authority.detail.htitle}]]</h3>
+            </div>
+            <div class="panel-body" style="background-color:#EEEEEE;padding:8px;">
+
+                <link th:href="@{/resource/css/datepicker.css}"
+                      rel="stylesheet"/>
+                <link th:href="@{/resource/css/jquery.validator.css}"
+                      rel="stylesheet"/>
+                <script type="text/javascript"
+                        th:src="@{/resource/js/jquery.validator.js}"></script>
+                <script type="text/javascript"
+                        th:src="@{/resource/js/bootstrap-datepicker.min.js}"></script>
+                <script type="text/javascript"
+                        th:src="@{|/resource/js/i18n/jquery.validator.#{locale}.js|}"></script>
+                <script type="text/javascript"
+                        th:src="@{|/resource/js/i18n/datepicker/bootstrap-datepicker.#{locale}.js|}"></script>
+                <script type="text/javascript">
+                    $(function () {
+                        $('#establishTime').datepicker({
+                            autoclose: true,
+                            format: "yyyy-mm-dd"
+                        }).next().on("click", function () {
+                            $(this).prev().focus();
+                        });
+                        $('#contentForm').validator({
+                            theme: "yellow_right"
+                        });
+                        $("#demo2Btn .btn").click(function () {
+                            $("#demo2").val($(this).find("input").val()).trigger("validate");
+
+                        });
+
+                    });
+                </script>
+                <div class="highlight">
+                    <form class="form-horizontal" role="form"
+                          th:action="@{/auth/authority/detail.do}" id="detailForm" name="detailForm"
+                          method="post">
+
+                        <input type="hidden" name="modify" th:value="${modify}"/> <input
+                            type="hidden" name="id" th:value="${dataObj.id}"/>
+
+                        <div class="form-group ">
+                            <label for="name" class="col-sm-3 control-label">
+                               [[#{system.auth.name}]]
+                            </label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control input-sm" name="name"
+                                       id="name" data-rule="required" th:value="${dataObj.name}">
+                            </div>
+                            <div class="col-sm-5"></div>
+                        </div>
+
+                        <div class="form-group ">
+                            <label for="nameEn" class="col-sm-3 control-label">
+                                [[#{system.auth.nameEn}]]
+                            </label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control input-sm" name="nameEn"
+                                       id="nameEn" data-rule="required" th:value="${dataObj.nameEn}">
+                            </div>
+                            <div class="col-sm-5"></div>
+                        </div>
+
+                        <div class="form-group ">
+                            <label for="description" class="col-sm-3 control-label">
+                               [[#{system.auth.desc}]]
+                            </label>
+                            <div class="col-sm-4">
+				<textarea class="form-control input-sm" name="description"
+                          id="description">[[${dataObj.description}]]</textarea>
+                            </div>
+                            <div class="col-sm-5"></div>
+                        </div>
+
+                        <div class="form-group ">
+                            <label for="entrance" class="col-sm-3 control-label">
+                                [[#{system.auth.entrance}]]
+                            </label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control input-sm" name="entrance"
+                                       id="entrance" th:value="${dataObj.entrance}">
+                            </div>
+                            <div class="col-sm-5"></div>
+                        </div>
+
+
+                        <div class="form-group ">
+                            <label for="urls" class="col-sm-3 control-label">
+                                [[#{system.auth.url}]]
+                            </label>
+                            <div class="col-sm-4">
+				<textarea class="form-control input-sm" name="urls"
+                          id="urls">[[${dataObj.resourceHtmlString}]]</textarea>
+                            </div>
+                            <div class="col-sm-5"></div>
+                        </div>
+
+                        <div class="form-group ">
+                            <label for="code" class="col-sm-3 control-label">
+                                [[#{system.auth.code}]]
+                            </label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control input-sm" name="code"
+                                       id="code" th:value="${dataObj.code}">
+                            </div>
+                            <div class="col-sm-5"></div>
+                        </div>
+
+                        <div class="form-group ">
+                            <label for="code" class="col-sm-3 control-label">
+                               [[#{system.auth.order}]]
+                            </label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control input-sm" name="order"
+                                       id="order" th:value="${dataObj.order}">
+                            </div>
+                            <div class="col-sm-5"></div>
+                        </div>
+
+
+                </div>
+                <div class="form-group">
+
+                    <div class="col-sm-offset-3 col-sm-1 text-right">
+
+                            <button type="submit" class="btn btn-primary" th:if="${dataObj != null and dataObj.reserved!=null}">
+                                [[#{common.submit}]]
+                            </button>
+
+                    </div>
+
+                    <div class="col-sm-8 text-left">
+                        <a th:href="@{/auth/authority/list.do}" class="btn">
+                           [[#{common.back}]]
+                        </a>
+                    </div>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

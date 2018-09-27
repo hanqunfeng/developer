@@ -89,11 +89,16 @@ public class SystemRoleServiceImpl implements ISystemRoleService {
         return results;
     }
 
+    private String upperFirstWord(String str) {
+        StringBuffer sb = new StringBuffer(str);
+        sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));
+        return sb.toString();
+    }
+
     @Override
     @Cacheable(key = "#roleId+''+#fields+'SystemRoleServiceImpl.findById'")
     public SystemRole findById(Long roleId, String... fields) {
         SystemRole role = systemRoleJpaRepository.findByIdNew(roleId);
-        //role.getAuthorities().size();
         return role;
     }
 
