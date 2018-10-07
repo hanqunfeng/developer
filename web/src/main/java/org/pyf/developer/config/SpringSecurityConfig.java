@@ -47,7 +47,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         // 设置不拦截规则
-        web.ignoring().antMatchers("/demo/**","/resource/**","/**/*.jsp", "/login.do", "/access/sameLogin.do", "/**/*.json*", "/**/*.xml*", "/druid/**","/forgotPassword.do","/forgotPasswordEmail.do","/resetPassword.do");
+        web.ignoring().antMatchers("/checkcode/**","/resource/**","/**/*.jsp", "/login.do", "/access/sameLogin.do", "/**/*.json*", "/**/*.xml*", "/druid/**","/forgotPassword.do","/forgotPasswordEmail.do","/resetPassword.do");
 
     }
 
@@ -61,6 +61,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .accessDecisionManager(accessDecisionManager())
                 .expressionHandler(webSecurityExpressionHandler())
+                .antMatchers("/").authenticated()
                 .antMatchers("/index.do*").authenticated()
                 .antMatchers("/welcome.do*").authenticated()
                 .antMatchers("/**/*.do*").hasRole("HOLDER")

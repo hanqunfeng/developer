@@ -70,13 +70,17 @@ public class IndexController extends CP_SimpleBaseController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+
+
+
+
     /**
      * 展示首页面
      *
      * @param model 数据封装
      * @return 首页视图
      */
-    @RequestMapping("/index.do")
+    @RequestMapping(value = {"/","/index.do"})
     public String handleIndex(Model model, HttpServletRequest request) {
 
         //更新系统语言，这里这么做是因为切换语言后LocaleContextHolder不能立刻更新locale，所以这里需要特别设置一下
@@ -199,13 +203,16 @@ public class IndexController extends CP_SimpleBaseController {
         model.addAttribute("errorDetails", ex.getMessage());
         ex.printStackTrace(new PrintWriter(sw));
         model.addAttribute("errorTrace", sw.toString());
-        return "accessDeniedView";
+        //return "accessDeniedView";
+        return getView("accessDeniedView");
     }
 
     @RequestMapping("/access/sameLogin.do")
     @CP_OperateLog(value = "访问被拒绝页面")
     public String handleAccessSameLogin(Model model) {
-        return "accessSameLoginView";
+
+        //return "accessSameLoginView";
+        return getView("accessSameLoginView");
     }
 
     /**

@@ -336,7 +336,7 @@ public class MvcConfig implements WebMvcConfigurer {
      */
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/").setViewName("forward:/index.jsp");
+        //registry.addViewController("/").setViewName("forward:/index.jsp");
 
     }
 
@@ -382,6 +382,10 @@ public class MvcConfig implements WebMvcConfigurer {
                 .allowCredentials(true) //是否允许用户发送、处理 cookie
                 .maxAge(3600); //预检请求的有效期，单位为秒。有效期内，不会重复发送预检请求
     }
+
+
+
+
 
 
 

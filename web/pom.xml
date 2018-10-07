@@ -6,7 +6,7 @@
     <groupId>org.pyf</groupId>
     <artifactId>developer-web</artifactId>
     <version>0.0.1</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
 
     <name>developer-web</name>
     <description>Demo project for Spring Boot</description>

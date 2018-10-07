@@ -152,7 +152,7 @@ body {
 						</div>
 						<div class="col-sm-5 no-padding">
 						<a href="javascript:void(0);" onclick="getNewkey()" title="<fmt:message key="login.image.alt"/>"> <img id="yzkey" width="80px" height="30px" align="bottom" border="0"
-									src="<%=request.getContextPath() %>/resource/image.jsp"> </a>
+									src="<%=request.getContextPath() %>/checkcode/bimage"> </a>
 									
 									
 									
@@ -217,7 +217,7 @@ body {
 	
 	//刷新验证码
 	function getNewkey(){
-		jQuery("#yzkey").attr("src","${_contextPath}/resource/image.jsp?tem="+Math.floor(Math.random() * 100)).fadeIn();
+		jQuery("#yzkey").attr("src","${_contextPath}/checkcode/bimage?tem="+Math.floor(Math.random() * 100)).fadeIn();
 		//var tem = jQuery("#foo").serialize();
 		//window.open("${_contextPath}/login.do?"+tem,"_self");
 	}

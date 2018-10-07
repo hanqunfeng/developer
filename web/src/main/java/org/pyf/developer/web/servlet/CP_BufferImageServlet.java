@@ -2,7 +2,6 @@ package org.pyf.developer.web.servlet;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,8 +10,8 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Random;
 
-@WebServlet(urlPatterns = {"/resource/image.jsp"})
-public class BufferImage extends HttpServlet {
+//@WebServlet(urlPatterns = {"/checkcode/bimage"})  //jar的方式启动不能注册，需要@Bean的方式注册
+public class CP_BufferImageServlet extends HttpServlet {
     public static final int WIDTH = 120;//生成图片的宽度
     public static final int HEIGHT = 30;//生成图片的高度
     public static final int WORDS_NUMBER = 4;//验证码中字符的个数
