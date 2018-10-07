@@ -250,7 +250,8 @@ public class IndexController extends CP_SimpleBaseController {
         if (StringUtils.hasText(error)) {
             model.addAttribute("result", error);
         }
-        return "forgotPasswordView";
+        //return "forgotPasswordView";
+        return getView("forgotPasswordView");
     }
     /**
      * 登录页面
@@ -266,7 +267,8 @@ public class IndexController extends CP_SimpleBaseController {
         int result = userService.handleForgotPasswordEmail(su);
 
         model.addAttribute("result", result);
-        return "forgotPasswordView";
+        //return "forgotPasswordView";
+        return getView("forgotPasswordView");
     }
     /**
      * 登录页面
@@ -282,7 +284,8 @@ public class IndexController extends CP_SimpleBaseController {
         String encodePassword = passwordEncoder.encode(newPassword);
         Integer result = userService.handleResetPassword(encode,newPassword,encodePassword);
         model.addAttribute("result", result);
-        return "resetPasswordView";
+        //return "resetPasswordView";
+        return getView("resetPasswordView");
     }
 
 }
