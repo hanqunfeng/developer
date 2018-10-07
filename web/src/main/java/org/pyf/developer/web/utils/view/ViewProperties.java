@@ -17,7 +17,7 @@ import java.util.Map;
 @Data
 @Component
 @ConditionalOnProperty(prefix="spring.thymeleaf",name = "enabled",havingValue = "true")
-@PropertySource({"classpath:/config/properties/view-name.properties"})
+@PropertySource({"classpath:/config/properties/view-name.properties"})//通过代码生成器搞定吧
 @ConfigurationProperties(prefix = "view")
 public class ViewProperties {
     private Map<String, String> name = new HashMap<String, String>();
