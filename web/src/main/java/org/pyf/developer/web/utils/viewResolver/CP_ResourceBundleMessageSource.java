@@ -3,6 +3,7 @@ package org.pyf.developer.web.utils.viewResolver;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.pyf.developer.utils.CP_ArrayUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.io.DefaultResourceLoader;
@@ -119,7 +120,7 @@ public class CP_ResourceBundleMessageSource extends ResourceBundleMessageSource 
         }
         String[] resolvedBasenames = namesList.toArray(new String[] {});
 
-        String[] all = org.springframework.util.StringUtils.mergeStringArrays(tempBaseNames,
+        String[] all = CP_ArrayUtils.mergeStringArrays(tempBaseNames,
                 resolvedBasenames);
         return all;
     }

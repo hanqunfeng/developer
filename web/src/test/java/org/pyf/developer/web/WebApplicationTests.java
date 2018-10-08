@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Arrays;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
@@ -50,6 +52,20 @@ public class WebApplicationTests {
     public void test2(){
         SystemUser systemUser = systemUserService.findById("admin");
         System.out.println(systemUser.getName());
+    }
+
+    @Test
+    public void test3(){
+
+        String[] a = { "0", "1", "2", "3","4" };
+
+        String[] b = { "4", "5", "6", "1", "2" };
+        LinkedHashSet set = new LinkedHashSet();
+        set.addAll(Arrays.asList(a));
+        set.addAll(Arrays.asList(b));
+
+        String[] c = (String[])set.toArray(new String[0]);
+        System.out.println(c.length);
     }
 
 }
