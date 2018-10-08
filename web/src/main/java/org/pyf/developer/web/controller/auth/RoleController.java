@@ -102,7 +102,8 @@ public class RoleController extends CP_SimpleBaseController {
                 sorter, page);
         model.addAttribute("results", results);
         model.addAttribute("authname", authname);
-        return "role_list_view";
+        //return "role_list_view";
+        return getView("role_list_view");
     }
 
     /**
@@ -125,7 +126,8 @@ public class RoleController extends CP_SimpleBaseController {
         }
         model.addAttribute("dataObj", role);
         model.addAttribute("modify", modify);
-        return "role_detail_view";
+        //return "role_detail_view";
+        return getView("role_detail_view");
     }
 
     /**
@@ -143,7 +145,8 @@ public class RoleController extends CP_SimpleBaseController {
         model.addAttribute("dataObj", roleService.findById(role.getId(), "authorities"));
         model.addAttribute("modify", true);
         model.addAttribute("message", "message.create.success");
-        return "role_detail_view";
+        //return "role_detail_view";
+        return getView("role_detail_view");
     }
 
     /**
@@ -169,7 +172,8 @@ public class RoleController extends CP_SimpleBaseController {
         model.addAttribute("dataObj", roleService.findById(role.getId(), "authorities"));
         model.addAttribute("modify", true);
 
-        return "role_detail_view";
+        //return "role_detail_view";
+        return getView("role_detail_view");
     }
 
     /**
