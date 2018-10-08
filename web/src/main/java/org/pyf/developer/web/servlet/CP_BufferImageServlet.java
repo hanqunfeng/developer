@@ -40,7 +40,7 @@ public class CP_BufferImageServlet extends HttpServlet {
         String randomString = this.drawRandomNum((Graphics2D)g, createTypeFlag);
 
         //将随机数存在session中
-        req.getSession().setAttribute("checkcode", randomString);
+        req.getSession(true).setAttribute("checkcode", randomString);
 
         //设置响应头通知浏览器以图片的形式打开
         resp.setContentType("image/jpeg");

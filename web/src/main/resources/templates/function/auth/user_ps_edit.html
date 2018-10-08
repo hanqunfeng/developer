@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<header th:replace="common/model::header"></header>
+
+<body>
+<div th:replace="common/model::script"></div>
+
+<div class="row" style="margin:0px;">
+	<div class="col-sm-12" style="padding:0px;">
+		<div class="panel panel-primary" style="margin-bottom:1px;">
+
+
+			<div class="panel-heading">
+				<h3 class="panel-title"><i class="icon-list"></i> [[#{user.detail.htitle}]]</h3>
+			</div>
+			<div class="panel-body" style="background-color:#EEEEEE;padding:8px;">
+
+				<link th:href="@{/resource/css/jquery.validator.css}"
+					  rel="stylesheet"/>
+				<script type="text/javascript"
+						th:src="@{/resource/js/jquery.validator.js}"></script>
+
+				<script type="text/javascript"
+						th:src="@{|/resource/js/i18n/jquery.validator.#{locale}.js|}"></script>
+
+
+
+<script type="text/javascript">
+$(function(){
+	
+	$('#contentForm').validator(
+			{
+				theme:"yellow_right",		
+				rules: {
+					newpasswd: function(element, params){
+						 var check = true;
+						 var ls = 0;
+						 
+						 if($(element).val().match(/^[0-9a-zA-Z#@_]{6,16}$/)){  ls++; } 
+						 if($(element).val().match(/([a-zA-Z])+/)){  ls++; }  
+						 if($(element).val().match(/([0-9])+/)){  ls++; }
+						 if($(element).val().match(/([#@_])+/)){  ls++; }
+						 if(ls < 4){
+							 check = false;
+						 }
+			             return check || "[[#{user.detail.passwd.rule}]]";
+			        }
+				}
+		
+	});
+	
+	
+
+	
+	
+	
+});
+
+</script>
+<div class="highlight">
+
+<form  method="post" th:action="@{/auth/user/userUpdatePS.do}" id="contentForm" name="contentForm" role="form" class="form-horizontal">
+
+	
+	<div class="form-group ">
+		<label for="userId" class="col-sm-3 control-label" th:text="#{system.user.userid}"></label>
+		<div class="col-sm-4">
+		
+			[[${dataObj.userId}]]
+			<input type="hidden" id="userId" name="userId" th:value="${dataObj.userId}" />
+			
+		
+		
+	</div>
+	
+	<div class="col-sm-5"></div>
+	</div>
+	
+	<div class="form-group ">
+		<label  class="col-sm-3 control-label" th:text="#{system.user.name}"></label>
+		<div class="col-sm-4">
+			[[${dataObj.name}]]
+		</div>
+		<div class="col-sm-5"></div>
+	</div>
+	
+	
+	<div class="form-group">
+		<label class="col-sm-3 control-label" th:text="#{system.user.mobile}"></label>
+		<div class="col-sm-2">
+			[[${dataObj.mobileNumber}]]
+		</div>
+		
+	
+		<label class="col-sm-1 control-label" th:text="#{system.user.phoneNumber}"></label>
+		<div class="col-sm-2">
+			[[${dataObj.phoneNumber}]]
+		</div>
+		<div class="col-sm-4"></div>
+		
+	</div>
+	
+	<div class="form-group">
+		<label class="col-sm-3 control-label" th:text="#{system.user.email}"></label>
+		<div class="col-sm-4">
+			[[${dataObj.email}]]
+		</div>
+		<div class="col-sm-5"></div>
+	</div>
+	
+
+	
+	<div class="form-group ">
+		<label for="password" class="col-sm-3 control-label" th:text="#{user.detail.oldPw}"></label>
+		<div class="col-sm-4">
+			<input id="password" name="password" type="password" class="form-control" th:placeholder="#{user.detail.ps.oldps}" data-rule="required">
+		</div>
+		<div class="col-sm-5"></div>
+	</div>
+	<div class="form-group ">
+		<label for="newPassword" class="col-sm-3 control-label" th:text="#{user.detail.newPw}"></label>
+		<div class="col-sm-4">
+			<input id="newPassword" name="newPassword" type="password" class="form-control" th:placeholder="#{user.detail.ps.newps}" data-rule="required;length[6~16];">
+		</div>
+		<div class="col-sm-5"></div>
+	</div>
+	<div class="form-group ">
+		<label for="checkPassword" class="col-sm-3 control-label" th:text="#{user.detail.checknewPw}"></label>
+		<div class="col-sm-4">
+			<input id="checkPassword" name="checkPassword" type="password" class="form-control" th:placeholder="#{user.detail.ps.cknewps}" data-rule="required;match[newPassword]">
+		</div>
+		<div class="col-sm-5"></div>
+	</div>
+	
+
+	
+	
+	
+	<div class="form-group">
+		<div class="col-sm-offset-3 col-sm-1 text-right">
+			<button type="submit" class="btn btn-primary" th:text="#{common.submit}"></button>
+		</div>
+		<div class="col-sm-8 text-left">
+	
+		</div>
+	</div>
+</form>
+</div>

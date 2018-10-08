@@ -98,7 +98,8 @@ public class UserRoleController extends CP_SimpleBaseController {
 		model.addAttribute("dataObj", user);
 		model.addAttribute("roles", roles);
 		model.addAttribute("reserved", reserved);
-		return "user_userdetail_view";
+		//return "user_userdetail_view";
+		return getView("user_userdetail_view");
 	}
 
 	/**
@@ -150,7 +151,8 @@ public class UserRoleController extends CP_SimpleBaseController {
 				page,"roles");
 		
 		model.addAttribute("results", results);
-		return "user_list_view";
+		//return "user_list_view";
+		return getView("user_list_view");
 	}
 	
 	/**                                                          
@@ -166,7 +168,8 @@ public class UserRoleController extends CP_SimpleBaseController {
 		
 		model.addAttribute("dataObj", new SystemUser());
 		model.addAttribute("modify", "add");
-		return "user_userdetail_view";
+		//return "user_userdetail_view";
+		return getView("user_userdetail_view");
 	}
 	
 	/**                                                          
@@ -220,8 +223,7 @@ public class UserRoleController extends CP_SimpleBaseController {
 		
 		if(StringUtils.isNotBlank(newPassword)){//修改密码
 
-			if (passwordEncoder.encode(user.getPassword())
-					.equals(dataObj.getPassword())) {// 旧密码正确
+			if (passwordEncoder.matches(user.getPassword(),dataObj.getPassword())) {// 旧密码正确
                 newPassword = passwordEncoder.encode(newPassword);
 				dataObj = userService.updatePS(user, newPassword);
 				model.addAttribute("message", "message.user.password.success");//修改成功
@@ -233,7 +235,8 @@ public class UserRoleController extends CP_SimpleBaseController {
 		
 		model.addAttribute("dataObj", dataObj);
 		
-		return "user_updatePS_view";
+		//return "user_updatePS_view";
+		return getView("user_updatePS_view");
 	}
 	
 	
@@ -256,7 +259,8 @@ public class UserRoleController extends CP_SimpleBaseController {
 		}
 		model.addAttribute("dataObj", user);
 		model.addAttribute("modify", "update");
-		return "user_userdetail_view";
+		//return "user_userdetail_view";
+		return getView("user_userdetail_view");
 	}
 	
 

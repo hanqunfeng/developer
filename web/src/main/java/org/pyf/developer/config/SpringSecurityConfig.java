@@ -64,6 +64,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").authenticated()
                 .antMatchers("/index.do*").authenticated()
                 .antMatchers("/welcome.do*").authenticated()
+                .antMatchers("/auth/user/userUpdatePS.do*").authenticated()
                 .antMatchers("/**/*.do*").hasRole("HOLDER")
                 //.antMatchers("/**/*.do*").authenticated()
                 //.anyRequest().authenticated()

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<header th:replace="common/model::header"></header>
+
+<body>
+<div th:replace="common/model::script"></div>
+
+<div class="row" style="margin:0px;">
+    <div class="col-sm-12" style="padding:0px;">
+        <div class="panel panel-primary" style="margin-bottom:1px;">
+
+
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="icon-list"></i> [[#{user.detail.htitle}]]</h3>
+            </div>
+            <div class="panel-body" style="background-color:#EEEEEE;padding:8px;">
+                <link th:href="@{/resource/css/datepicker.css}"
+                      rel="stylesheet"/>
+                <link th:href="@{/resource/css/jquery.validator.css}"
+                      rel="stylesheet"/>
+                <script type="text/javascript"
+                        th:src="@{/resource/js/jquery.validator.js}"></script>
+                <script type="text/javascript"
+                        th:src="@{/resource/js/bootstrap-datepicker.min.js}"></script>
+                <script type="text/javascript"
+                        th:src="@{|/resource/js/i18n/jquery.validator.#{locale}.js|}"></script>
+                <script type="text/javascript"
+                        th:src="@{|/resource/js/i18n/datepicker/bootstrap-datepicker.#{locale}.js|}"></script>
+
+                <script type="text/javascript">
+                    $(function(){
+
+                        $('#contentForm').validator(
+                            {
+                                theme:"yellow_right",
+                                rules: {
+                                    email1: [/^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.(?:com|cn)$/, '[[#{vali.email.error}]]']
+                                }
+
+
+
+                            });
+
+
+                        $("#search_link").click(function(){
+                            var val = $("#rolekey").val().toLowerCase();
+                            $("#authsdiv li label").filter(function(index){
+                                var text = $(this).text().toLowerCase();
+                                var re = new RegExp(val);
+                                if(text.match(re))
+                                    $(this).parent().show();
+                                else
+                                    $(this).parent().hide();
+                            });
+                            return false;
+                        });
+
+                        $("#show_all_link").click(function(){
+                            $("#rolekey").val("");
+                            $("#authsdiv li").show();
+                            return false;
+                        });
+
+                        $("#selected_link").click(function(){
+                            $("#rolekey").val("");
+                            $("#authsdiv li").hide();
+                            $("#authsdiv li :checkbox:checked").parent().show();
+                            return false;
+                        });
+
+                        var modify = "[[${modify}]]";
+                        if(modify != "add"){
+                            $("#password").attr("placeholder","[[#{user.detail.changeNotice}]]");
+                        }
+
+
+                    });
+
+                </script>
+                <div class="highlight">
+
+                    <form  method="post" th:action="@{/auth/user/userSave.do}" id="contentForm" name="contentForm" role="form" class="form-horizontal">
+
+
+                        <div class="form-group ">
+                            <label for="userId" class="col-sm-3 control-label" th:text="#{system.user.userid}"></label>
+                            <div class="col-sm-4">
+
+                                <input type="text" id="userId" name="userId" class="form-control"  data-rule="required" th:if="${modify == 'add'}"/>
+
+                                [[${dataObj.userId}]]
+                                <input type="hidden" id="userId" name="userId" th:value="${dataObj.userId}" th:if="${modify != 'add'}"/>
+
+
+                            </div>
+
+                            <div class="col-sm-5"></div>
+                        </div>
+
+                        <div class="form-group ">
+                            <label for="name" class="col-sm-3 control-label" th:text="#{system.user.name}"></label>
+                            <div class="col-sm-4">
+                                <input type="text" id="name" name="name" class="form-control"  data-rule="required" th:value="${dataObj.name}"/>
+                            </div>
+                            <div class="col-sm-5"></div>
+                        </div>
+
+                        <div class="form-group ">
+                            <label for="password" class="col-sm-3 control-label" th:text="#{user.detail.password}"></label>
+                            <div class="col-sm-4">
+
+                                <input type="password"  id="password" name="password" class="form-control" />
+
+                            </div>
+                            <div class="col-sm-5"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="mobileNumber" class="col-sm-3 control-label" th:text="#{system.user.mobile}"></label>
+                            <div class="col-sm-2">
+
+                                <input type="text" id="mobileNumber" name="mobileNumber" class="form-control" th:value="${dataObj.mobileNumber}"  />
+                            </div>
+
+
+                            <label for="phoneNumber" class="col-sm-1 control-label" th:text="#{system.user.phoneNumber}"></label>
+                            <div class="col-sm-2">
+                                <input type="text" id="phoneNumber" name="phoneNumber" class="form-control" th:value="${dataObj.phoneNumber}"  />
+                            </div>
+                            <div class="col-sm-4"></div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email" class="col-sm-3 control-label" th:text="#{system.user.email}"></label>
+                            <div class="col-sm-4">
+                                <input type="text" id="email" name="email" class="form-control"  data-rule="required;email" th:value="${dataObj.email}"/>
+                            </div>
+                            <div class="col-sm-5"></div>
+                        </div>
+
+
+
+                        <div class="form-group ">
+                            <label class="col-sm-3 control-label" th:text="#{user.detail.status}"></label>
+                            <div class="col-sm-4">
+                                <div class="control-group">
+                                    <input type="radio" id="status" name="status" class="ace form-control" value="true" data-rule="checked" checked="checked" th:if="${dataObj.status==true}"/>
+                                    <input type="radio" id="status" name="status" class="ace form-control" value="true" data-rule="checked"  th:if="${dataObj.status!=true}"/>
+                                    <span class="lbl control-label" th:text="#{common.enabled}"></span>
+                                    <input type="radio" id="status" name="status" class="ace form-control" value="false" data-rule="checked" checked="checked" th:if="${dataObj.status==false}"/>
+                                    <input type="radio" id="status" name="status" class="ace form-control" value="false" data-rule="checked"  th:if="${dataObj.status!=false}"/>
+                                    <span class="lbl control-label" th:text="#{common.disabled}"></span>
+
+                                </div>
+                                <div class="col-sm-5"></div>
+                            </div>
+                        </div>
+
+                        <input type="hidden" id="modify" name="modify" th:value="${modify}" />
+
+
+
+                        <div class="form-group " th:if="${modify != 'add'}">
+
+                            <label class="col-sm-3 control-label" th:text="#{system.user.rolesetter}"></label>
+                            <div class="col-sm-4">
+
+                                <div th:if="${reserved!=null}">
+                                    <input type="text" name="rolekey" id="rolekey"/>
+                                    <a href="#" id="search_link" th:text="#{common.search}"></a>
+                                    <a href="#" id="show_all_link" th:text="#{common.showall}"></a>
+                                    <a href="#" id="selected_link" th:text="#{common.selected}"></a>
+                                </div>
+
+                                <div id="authsdiv" style="height:200px;overflow-y:scroll;border:1px solid gray;">
+                                    <ul style="list-style-type:none;margin:0;padding:0;">
+                                        <div th:if="${reserved}">
+
+                                            <li th:each="item:${dataObj.roles}">
+                                                <input type="checkbox" name="roles" th:value="${item.id}"  style="display:none;" class="noborder"><label th:text="${item.name}"></label>
+
+                                            </li>
+                                        </div>
+
+                                        <div th:if="${reserved == false}">
+
+                                            <li th:each="item:${roles}" >
+
+
+
+                                                <input type="checkbox" name="roles" th:value="${item.id}"
+                                                       checked="checked" th:if="${dataObj.roles !=null and #arrays.contains(dataObj.roles,item)}">
+
+                                                <input type="checkbox" name="roles" th:value="${item.id}" th:if="${dataObj.roles ==null or #arrays.contains(dataObj.roles,item)==false}">
+
+
+
+                                                <label th:text="${item.name}"></label>
+
+                                            </li>
+
+                                        </div>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="form-group">
+
+                            <div class="col-sm-offset-3 col-sm-1 text-right">
+
+                                <button type="submit" class="btn btn-primary" th:text="#{common.submit}">
+
+                                </button>
+
+                            </div>
+
+                            <div class="col-sm-8 text-left">
+                                <a th:href="@{/auth/user/list.do}" class="btn" th:text="#{common.back}"> </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
