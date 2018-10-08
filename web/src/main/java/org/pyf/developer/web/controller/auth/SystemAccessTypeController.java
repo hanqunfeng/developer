@@ -48,7 +48,8 @@ public class SystemAccessTypeController extends CP_SimpleBaseController {
         model.addAttribute("dataObj", accessType);
         model.addAttribute("modify", true);
         model.addAttribute("message", "message.create.success");
-        return "accesstype_detail_view";
+        //return "accesstype_detail_view";
+        return getView("accesstype_detail_view");
     }
 
     /**
@@ -91,7 +92,8 @@ public class SystemAccessTypeController extends CP_SimpleBaseController {
         }
         model.addAttribute("dataObj", accessType);
         model.addAttribute("modify", modify);
-        return "accesstype_detail_view";
+        //return "accesstype_detail_view";
+        return getView("accesstype_detail_view");
     }
 
 
@@ -123,7 +125,8 @@ public class SystemAccessTypeController extends CP_SimpleBaseController {
         List<SystemAccessType> results = systemAccessTypeService.findByPage(example, sorter,
                 page);
         model.addAttribute("results", results);
-        return "accesstype_list_view";
+        //return "accesstype_list_view";
+        return getView("accesstype_list_view");
     }
 
     /**
@@ -142,7 +145,8 @@ public class SystemAccessTypeController extends CP_SimpleBaseController {
         model.addAttribute("dataObj", accesstype);
         model.addAttribute("modify", true);
         model.addAttribute("message", "message.modify.success");
-        return "accesstype_detail_view";
+        //return "accesstype_detail_view";
+        return getView("accesstype_detail_view");
     }
 
 

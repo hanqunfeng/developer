@@ -141,8 +141,6 @@ public class AuthorityController extends CP_SimpleBaseController {
 		model.addAttribute("results", results);
 		model.addAttribute("showExporter", showExporter);
 
-		int i = 0;
-		int j = 100/i;
 
 		//return "authority_list_view";
 		return getView("authority_list_view");

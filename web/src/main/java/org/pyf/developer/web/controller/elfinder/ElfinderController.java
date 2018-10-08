@@ -10,6 +10,7 @@ import org.pyf.developer.elfinder.command.ElfinderCommand;
 import org.pyf.developer.elfinder.command.ElfinderCommandFactory;
 import org.pyf.developer.elfinder.core.ElfinderContext;
 import org.pyf.developer.elfinder.service.ElfinderStorageFactory;
+import org.pyf.developer.web.controller.base.CP_SimpleBaseController;
 import org.pyf.developer.web.service.elfinder.ElfinderService;
 import org.pyf.developer.web.utils.security.CP_IUser;
 import org.slf4j.Logger;
@@ -38,7 +39,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/elfinder")
-public class ElfinderController {
+public class ElfinderController extends CP_SimpleBaseController {
 
     private static final Logger logger = LoggerFactory.getLogger(ElfinderController.class);
 
@@ -59,14 +60,17 @@ public class ElfinderController {
     @RequestMapping("/view.do")
     public String homeView(Model model){
         model.addAttribute("flag","home");
-        return "elfinder_view";
+        //return "elfinder_view";
+        return getView("elfinder_view");
     }
 
     @RequestMapping("/shareview.do")
     public String showView(Model model){
         model.addAttribute("flag","share");
-        return "elfinder_view";
+        //return "elfinder_view";
+        return getView("elfinder_view");
     }
+
 
 
 
