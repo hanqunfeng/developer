@@ -193,7 +193,7 @@
                                                 <input type="checkbox" name="roles" th:value="${item.id}"
                                                        checked="checked" th:if="${dataObj.roles !=null and #arrays.contains(dataObj.roles,item)}">
 
-                                                <input type="checkbox" name="roles" th:value="${item.id}" th:if="${dataObj.roles ==null or #arrays.contains(dataObj.roles,item)==false}">
+                                                <input type="checkbox" name="roles" th:value="${item.id}" th:if="${dataObj.roles ==null or not #sets.contains(dataObj.roles,item)}">
 
 
 
