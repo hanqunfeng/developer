@@ -103,10 +103,10 @@ public class CP_BufferImageServlet extends HttpServlet {
         g.setColor(Color.RED);
         g.setFont(new Font("宋体",Font.BOLD,20));
 
-        //数字字母的组合
-        String baseNumLetter = "0123456789ABCDEFGHJKLMNOPQRSTUVWXYZ";
-        String baseNum = "0123456789";
-        String baseLetter = "ABCDEFGHJKLMNOPQRSTUVWXYZ";
+        //数字字母的组合，为了避免数字0和字母O混淆，所以去掉了
+        String baseNumLetter = "123456789ABCDEFGHJKLMNPQRSTUVWXYZ";
+        String baseNum = "123456789";
+        String baseLetter = "ABCDEFGHJKLMNPQRSTUVWXYZ";
         if ( createTypeFlag != null  && createTypeFlag.length() > 0 ) {
             if( createTypeFlag.equals("nl") ) {
                 //截取数字和字母的组合
