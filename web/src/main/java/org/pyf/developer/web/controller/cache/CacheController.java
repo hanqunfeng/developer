@@ -12,12 +12,12 @@
 package org.pyf.developer.web.controller.cache;
 
 
+import org.pyf.developer.service.auth.ISystemUserService;
 import org.pyf.developer.web.controller.base.CP_SimpleBaseController;
+import org.pyf.developer.web.service.cache.ICacheService;
 import org.pyf.developer.web.utils.log.CP_OperateLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
-import org.springframework.cache.concurrent.ConcurrentMapCache;
-import org.springframework.cache.support.SimpleCacheManager;
 import org.springframework.security.core.session.SessionInformation;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.stereotype.Controller;
@@ -27,8 +27,11 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
-import javax.annotation.Resource;
-import java.util.*;
+import javax.transaction.Transactional;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.concurrent.ConcurrentMap;
 
 import static org.pyf.developer.web.utils.log.CP_GlobalNamingConstant.OPERATE_CACHE;
@@ -47,21 +50,27 @@ import static org.pyf.developer.web.utils.log.CP_GlobalNamingConstant.OPERATE_CA
 @Controller
 @SessionAttributes({ "message", "messageStatus", "arguments" })
 public class CacheController extends CP_SimpleBaseController {
-	@Resource(name = "cacheManager")
-	SimpleCacheManager cacheManager;
+
+
+	@Autowired
+	ICacheService cacheService;
+
 
 	@Autowired
 	SessionRegistry sessionRegistry;
+
+	@Autowired
+	ISystemUserService systemUserService;
 
 	@RequestMapping("/cache/flush_all.do")
 	@CP_OperateLog(value = "刷新全部缓存", type = OPERATE_CACHE)
 	public ModelAndView handleFlushAll(Model model) {
 		ModelAndView v = null;
-		Iterator<String> iterator = getCacheNames();
+		Iterator<String> iterator = cacheService.getCacheNames();
 		while (iterator.hasNext()) {
 			String name = iterator.next();
 			// System.out.println(name);
-			Cache cache = cacheManager.getCache(name);
+			Cache cache = cacheService.getCache(name);
 			cache.clear();
 		}
 
@@ -74,11 +83,11 @@ public class CacheController extends CP_SimpleBaseController {
 	@CP_OperateLog(value = "刷新指定缓存", type = OPERATE_CACHE)
 	public ModelAndView handleFlushByName(String cacheName, Model model) {
 		ModelAndView v = null;
-		Iterator<String> iterator = getCacheNames();
+		Iterator<String> iterator = cacheService.getCacheNames();
 		while (iterator.hasNext()) {
 			String name = iterator.next();
 			if (name.equals(cacheName)) {
-				Cache cache = cacheManager.getCache(name);
+				Cache cache = cacheService.getCache(name);
 				cache.clear();
 
 				break;
@@ -94,12 +103,14 @@ public class CacheController extends CP_SimpleBaseController {
 
 	@RequestMapping("/cache/list.do")
 	@CP_OperateLog(value = "刷新缓存列表", type = OPERATE_CACHE)
+	@Transactional
 	public String handleFlushList(Model model) {
-		Iterator<String> iterator = getCacheNames();
+		Iterator<String> iterator = cacheService.getCacheNames();
 		model.addAttribute("results", iterator);
 		
 		this.listActiveUsers(model);
-		
+
+
 		//return "cacheView";
 		return getView("cacheView");
 	}
@@ -133,39 +144,26 @@ public class CacheController extends CP_SimpleBaseController {
 		model.addAttribute("activeUsers", lastActivityDates);
 	}
 
-	/**
-	 * 描述 : <获得缓存名称集合>. <br>
-	 * <p>
-	 * <使用方法说明>
-	 * </p>
-	 * 
-	 * @return
-	 */
-	private Iterator<String> getCacheNames() {
-		Collection<String> cacheNames = cacheManager.getCacheNames();
-		Iterator<String> iterator = cacheNames.iterator();
-		return iterator;
-	}
+
+
 
 	@SuppressWarnings("unchecked")
 	@RequestMapping("/cache/getCacheContent_byName.do")
 	@CP_OperateLog(value = "查看指定缓存内容", type = OPERATE_CACHE)
 	public String handleGetByName(String cacheName, Model model) {
 		ConcurrentMap<Object, Object> map = null;
-		Iterator<String> iterator = getCacheNames();
+		Iterator<String> iterator = cacheService.getCacheNames();
 		while (iterator.hasNext()) {
 			String name = iterator.next();
 			if (name.equals(cacheName)) {
-				ConcurrentMapCache cache = (ConcurrentMapCache) cacheManager
-						.getCache(name);
-				map = cache.getNativeCache();
+				map = cacheService.getNativeCache(name);
 				break;
 			}
 
 		}
 		model.addAttribute("cacheName", cacheName);
 		model.addAttribute("cacheMap", map);
-		Iterator<String> iterator2 = getCacheNames();
+		Iterator<String> iterator2 = cacheService.getCacheNames();
 		model.addAttribute("results", iterator2);
 		//return "cacheView";
 		return getView("cacheView");
@@ -177,21 +175,20 @@ public class CacheController extends CP_SimpleBaseController {
 	public String handleFlushByListName(String cacheName, String cacheListName,
 			Model model) {
 		ConcurrentMap<Object, Object> map = null;
-		Iterator<String> iterator = getCacheNames();
+		Iterator<String> iterator = cacheService.getCacheNames();
 		while (iterator.hasNext()) {
 			String name = iterator.next();
 			if (name.equals(cacheName)) {
-				ConcurrentMapCache cache = (ConcurrentMapCache) cacheManager
-						.getCache(name);
-				map = cache.getNativeCache();
+				map = cacheService.getNativeCache(name);
 				map.remove(cacheListName);
+				cacheService.deleteByKey(name,cacheListName);
 				break;
 			}
 
 		}
 		model.addAttribute("cacheName", cacheName);
 		model.addAttribute("cacheMap", map);
-		Iterator<String> iterator2 = getCacheNames();
+		Iterator<String> iterator2 = cacheService.getCacheNames();
 		model.addAttribute("results", iterator2);
 		//return "cacheView";
 		return getView("cacheView");

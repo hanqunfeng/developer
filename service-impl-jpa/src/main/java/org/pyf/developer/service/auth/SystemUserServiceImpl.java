@@ -40,6 +40,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Transactional
 public class SystemUserServiceImpl implements ISystemUserService{
 
+
     @Autowired
     private MessageSource messageSource;
 
@@ -73,7 +74,7 @@ public class SystemUserServiceImpl implements ISystemUserService{
     }
 
     @Override
-    public List<SystemUser> findByPage(SystemUser user, CP_Sorter sorter, CP_Page page) {
+    public List<SystemUser> findByPage(SystemUser user, CP_Sorter sorter, CP_Page page, String... str) {
 
         page.setPageSize(25);
         //排序
@@ -103,19 +104,20 @@ public class SystemUserServiceImpl implements ISystemUserService{
 
         //如有需要，可以转成list
         List<SystemUser> results = IteratorUtils.toList(resultPage.iterator());
+        systemUserJpaRepository.lazyInitialize(SystemUser.class,results,str);
         return results;
     }
 
     @Override
-    public List<SystemUser> findByPage(SystemUser example, CP_Sorter sorter, CP_Page page, String... str) {
-        return this.findByPage(example, sorter, page);
+    public List<SystemUser> findByPage(SystemUser example, CP_Sorter sorter, CP_Page page) {
+        return this.findByPage(example, sorter, page,new String[]{});
     }
 
     @Override
     @Cacheable(key = "#userId+''+#fields+'SystemUserServiceImpl.findById'")
     public SystemUser findById(String userId, String... fields) {
         SystemUser user = systemUserJpaRepository.findByIdNew(userId);
-        //user.getRoles();
+        systemUserJpaRepository.lazyInitialize(user,fields);
         return user;
     }
 

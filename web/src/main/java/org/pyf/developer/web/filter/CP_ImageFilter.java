@@ -12,7 +12,6 @@
 package org.pyf.developer.web.filter;
 
 import javax.servlet.*;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -28,7 +27,7 @@ import java.util.Arrays;
  * @author hanqunfeng
  * @version V1.0
  */
-@WebFilter(filterName="imageFilter",urlPatterns="/forgotPasswordEmail.do")
+//@WebFilter(filterName="imageFilter",urlPatterns="/forgotPasswordEmail.do")
 public class CP_ImageFilter implements Filter {
     @Override
     public void destroy() {

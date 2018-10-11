@@ -32,4 +32,8 @@ public interface BaseJpaRepository<T,ID extends Serializable> extends JpaReposit
     List<?> findByHql(String hql);
 
     T findByIdNew(ID id);
+
+    public void lazyInitialize(Class<T> entityClazz,List<T> l, String[] fields);
+
+    public void lazyInitialize(T obj, String[] fields);
 }

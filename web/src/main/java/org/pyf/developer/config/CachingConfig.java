@@ -12,8 +12,9 @@
 package org.pyf.developer.config;
 
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+import org.pyf.developer.web.service.cache.CommonCacheService;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
@@ -34,13 +35,17 @@ import java.util.Set;
  * @author Administrator  
  * @version V1.0                             
  */
+@ConditionalOnProperty(prefix="redis.cache.log",name = "enabled",havingValue = "false")
 @Configuration
 @EnableCaching//<!-- 启用缓存注解 --> <cache:annotation-driven cache-manager="cacheManager" />
+@Slf4j
 public class CachingConfig {
-	private static final Logger logger = LoggerFactory.getLogger(CachingConfig.class);
-	@Bean(name = "cacheManager")
+
+
+
+	@Bean
 	public CacheManager cacheManager() {
-		logger.info("SimpleCacheManager");
+		log.info("SimpleCacheManager");
 		SimpleCacheManager simpleCacheManager = new SimpleCacheManager();
 
 		ConcurrentMapCache mapCache_default = new ConcurrentMapCache("default");
@@ -57,6 +62,14 @@ public class CachingConfig {
 		return simpleCacheManager;
 	}
 
+	@Bean
+	public CommonCacheService commonCacheService(){
+	    return new CommonCacheService();
+    }
+
+
+
+
 	//@Bean
 	//public EhCacheManagerFactoryBean ehCacheManagerFactoryBean() {
 	//	EhCacheManagerFactoryBean ehCacheManagerFactoryBean = new EhCacheManagerFactoryBean();
@@ -72,6 +85,11 @@ public class CachingConfig {
 	//	cacheManager.setCacheManager(ehCacheManagerFactoryBean().getObject());
 	//	return cacheManager;
 	//}
+
+
+
+
+
 }
 
 

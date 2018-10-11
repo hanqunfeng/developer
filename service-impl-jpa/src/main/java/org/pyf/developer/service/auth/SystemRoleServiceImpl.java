@@ -47,15 +47,17 @@ public class SystemRoleServiceImpl implements ISystemRoleService {
 
     @Override
     @Cacheable(key = "'SystemRoleServiceImpl.findAll'")
-    public List<SystemRole> findAll() {
+    public List<SystemRole> findAll(String... str) {
 
         Sort sort = new Sort(Sort.Direction.ASC, "id");
-        return systemRoleJpaRepository.findAll(sort);
+        List<SystemRole> list = systemRoleJpaRepository.findAll(sort);
+        systemRoleJpaRepository.lazyInitialize(SystemRole.class,list,str);
+        return list;
     }
 
     @Override
-    public List<SystemRole> findAll(String... str) {
-        return findAll();
+    public List<SystemRole> findAll() {
+        return findAll(new String[]{});
     }
 
     @Override
@@ -99,6 +101,7 @@ public class SystemRoleServiceImpl implements ISystemRoleService {
     @Cacheable(key = "#roleId+''+#fields+'SystemRoleServiceImpl.findById'")
     public SystemRole findById(Long roleId, String... fields) {
         SystemRole role = systemRoleJpaRepository.findByIdNew(roleId);
+        systemRoleJpaRepository.lazyInitialize(role,fields);
         return role;
     }
 
