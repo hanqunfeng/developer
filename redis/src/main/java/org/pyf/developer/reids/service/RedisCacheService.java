@@ -1,6 +1,7 @@
-package org.pyf.developer.web.service.cache;
+package org.pyf.developer.reids.service;
 
-import org.pyf.developer.web.utils.RedisUtils;
+import org.pyf.developer.reids.utils.RedisUtils;
+import org.pyf.developer.service.cache.ICacheService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;

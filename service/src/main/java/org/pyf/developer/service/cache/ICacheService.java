@@ -1,4 +1,4 @@
-package org.pyf.developer.web.service.cache;
+package org.pyf.developer.service.cache;
 
 import org.springframework.cache.Cache;
 
@@ -15,5 +15,5 @@ public interface ICacheService {
     public Cache getCache(String name);
     public Iterator<String> getCacheNames();
     public ConcurrentMap<Object, Object> getNativeCache(String name);
-    public boolean deleteByKey(String name,String key);
+    public boolean deleteByKey(String name, String key);
 }

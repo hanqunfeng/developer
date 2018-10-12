@@ -1,5 +1,6 @@
 package org.pyf.developer.web.service.cache;
 
+import org.pyf.developer.service.cache.ICacheService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
