@@ -35,7 +35,7 @@ import java.util.Set;
  * @author Administrator  
  * @version V1.0                             
  */
-@ConditionalOnProperty(prefix="redis.cache.log",name = "enabled",havingValue = "false")
+@ConditionalOnProperty(prefix="redis.cache.log",name = "enabled",havingValue = "false",matchIfMissing = true)
 @Configuration
 @EnableCaching//<!-- 启用缓存注解 --> <cache:annotation-driven cache-manager="cacheManager" />
 @Slf4j
