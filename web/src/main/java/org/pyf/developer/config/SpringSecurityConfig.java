@@ -16,6 +16,7 @@ import org.springframework.security.access.vote.RoleVoter;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
@@ -36,6 +37,7 @@ import java.util.List;
 
 
 @Configuration
+@EnableWebSecurity
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final Logger logger = LoggerFactory
@@ -47,7 +49,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         // 设置不拦截规则
-        web.ignoring().antMatchers("/checkcode/**","/resource/**","/**/*.jsp", "/login.do", "/access/sameLogin.do", "/**/*.json*", "/**/*.xml*", "/druid/**","/forgotPassword.do","/forgotPasswordEmail.do","/resetPassword.do");
+        web.ignoring().antMatchers("/checkcode/**","/resource/**","/**/*.jsp", "/access/sameLogin.do", "/**/*.json*", "/**/*.xml*", "/druid/**","/forgotPassword.do","/forgotPasswordEmail.do","/resetPassword.do");
 
     }
 
@@ -75,11 +77,14 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         // http.formLogin();
 
         // 自定义登录页面
-        http.csrf().disable().formLogin().loginPage("/login.do")
-                .failureUrl("/login.do?login_error=1").defaultSuccessUrl("/index.do", true)
-                .loginProcessingUrl("/j_spring_security_check")
-                .usernameParameter("j_username")
-                .passwordParameter("j_password").permitAll();
+        http
+            //.csrf().disable()//关闭csrf，如果默认开启scrf，则在生成页面时会自动在每个form中增加一个隐藏属性<input type="hidden" name="_csrf" value="95e8706b-8d22-4d62-9a27-3da5993e0a7d">，
+                // 实际上就是<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />，js中如果需要使用时也可以使用该属性
+            .formLogin().loginPage("/login.do")
+            .failureUrl("/login.do?login_error=1").defaultSuccessUrl("/index.do", true)
+            .loginProcessingUrl("/j_spring_security_check")
+            .usernameParameter("j_username")
+            .passwordParameter("j_password").permitAll();
 
         // 自定义注销
         http.logout().logoutUrl("/logout.do").logoutSuccessUrl("/login.do")
