@@ -147,6 +147,20 @@
         </dependency>
 
 
+        <!--消息队列，消息提供者项目引入developer-rabbitmq-provider，消息消费项目引入developer-rabbitmq-consumer-->
+        <dependency>
+            <artifactId>developer-rabbitmq-provider</artifactId>
+            <version>0.0.1</version>
+            <groupId>org.pyf</groupId>
+        </dependency>
+
+        <dependency>
+            <artifactId>developer-rabbitmq-consumer</artifactId>
+            <version>0.0.1</version>
+            <groupId>org.pyf</groupId>
+        </dependency>
+
+
 
 
 

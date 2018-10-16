@@ -71,7 +71,7 @@ public class MvcConfig implements WebMvcConfigurer {
      * @return
      */
     @Bean
-    @ConditionalOnProperty(prefix="spring.thymeleaf",name = "enabled",havingValue = "false")
+    @ConditionalOnProperty(prefix="spring.thymeleaf",name = "enabled",havingValue = "false",matchIfMissing = true)
     public ViewResolver resourceBundleViewResolver(){
         log.info("resourceBundleViewResolver");
         CP_ResourceBundleViewResolver viewResolver = new CP_ResourceBundleViewResolver();

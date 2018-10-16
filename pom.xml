@@ -15,6 +15,9 @@
         <module>utils</module>
         <module>elfinder</module>
         <module>redis</module>
+        <module>rabbitmq</module>
+        <module>rabbitmq-provider</module>
+        <module>rabbitmq-consumer</module>
     </modules>
     <packaging>pom</packaging>
 
