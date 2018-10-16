@@ -51,7 +51,7 @@ public class DemoController {
         CP_MessageEntity<SystemUser> messageEntity =  new CP_MessageEntity();
         messageEntity.setContent("SystemUser");
         messageEntity.setObject(systemUserService.findById("admin"));
-        // 将实体实例写入消息队列
+        // 将实体实例写入消息队列，延迟10秒
         messageSevice.sendMessage(messageEntity,10000);
         return "Success delay";
     }
