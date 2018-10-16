@@ -15,10 +15,10 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @ConditionalOnProperty(prefix="spring.rabbitmq",name = "enabled",havingValue = "true")
-@RabbitListener(queues = CP_QueueConstants.MESSAGE_QUEUE_NAME)
+@RabbitListener(queues = CP_QueueConstants.MESSAGE_QUEUE_NAME) //监听消息队列
 public class CP_MessageConsumer {
 
-    @RabbitHandler
+    @RabbitHandler//具体执行动作
     public void handler(@Payload CP_MessageEntity messageEntity) {
         log.info("消费内容：{}", JSON.toJSONString(messageEntity));
     }

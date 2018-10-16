@@ -39,4 +39,20 @@ public class DemoController {
         messageSevice.sendMessage(messageEntity);
         return "Success";
     }
+
+
+    /**
+     * 测试发送延迟消息队列方法
+     *
+     * @return
+     */
+    @RequestMapping(value = "/delay")
+    public String delay() {
+        CP_MessageEntity<SystemUser> messageEntity =  new CP_MessageEntity();
+        messageEntity.setContent("SystemUser");
+        messageEntity.setObject(systemUserService.findById("admin"));
+        // 将实体实例写入消息队列
+        messageSevice.sendMessage(messageEntity,10000);
+        return "Success delay";
+    }
 }

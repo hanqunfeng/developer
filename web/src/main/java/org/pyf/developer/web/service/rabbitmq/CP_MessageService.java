@@ -19,4 +19,19 @@ public class CP_MessageService implements CP_IMessageSevice {
     public void sendMessage(Object object) {
         log.info("rabbitmq is disabled");
     }
+
+    @Override
+    public void sendMessage(Object object, String exchange, String routerKey) {
+        log.info("rabbitmq is disabled");
+    }
+
+    @Override
+    public void sendMessage(Object object, long delayTimes) {
+        log.info("rabbitmq is disabled");
+    }
+
+    @Override
+    public void sendMessage(Object object, String exchange, String routerKey, long delayTimes) {
+        log.info("rabbitmq is disabled");
+    }
 }
