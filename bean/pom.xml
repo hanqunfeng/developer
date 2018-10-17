@@ -50,6 +50,12 @@
             <scope>provided</scope>
         </dependency>
 
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.data</groupId>-->
+            <!--<artifactId>spring-data-mongodb</artifactId>-->
+            <!--<version>2.0.9.RELEASE</version>-->
+        <!--</dependency>-->
+
 
     </dependencies>
 
@@ -57,13 +63,16 @@
 
         <plugins>
 
-            <!--该插件可以生成querysdl需要的查询对象，执行mvn compile即可 -->
+            <!--该插件可以生成querysdl需要的查询对象，执行mvn compile即可，注意：只要实体被@Entity注解即可被生成对应的Q对象 -->
             <plugin>
                 <groupId>com.mysema.maven</groupId>
                 <artifactId>apt-maven-plugin</artifactId>
                 <version>1.1.3</version>
                 <executions>
+                    <!-- JPA Query DSL -->
                     <execution>
+                        <id>jpa</id>
+                        <phase>generate-sources</phase> <!-- 可以正常打包了，因为没有加这个配置 -->
                         <goals>
                             <goal>process</goal>
                         </goals>
@@ -72,29 +81,43 @@
                             <processor>com.querydsl.apt.jpa.JPAAnnotationProcessor</processor>
                         </configuration>
                     </execution>
+
+                    <!-- Mongo Query DSL 下面这个配置可以不加，没发现和上面的配置的执行结果有啥不一样,只要实体被@Entity注解即可被生成对应的Q对象 -->
+                    <!--<execution>-->
+                        <!--<id>mongo</id>-->
+                        <!--<phase>generate-sources</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>process</goal>-->
+                        <!--</goals>-->
+                        <!--<configuration>-->
+                            <!--<outputDirectory>target/generated-sources/java</outputDirectory>-->
+                            <!--<processor>org.springframework.data.mongodb.repository.support.MongoAnnotationProcessor-->
+                            <!--</processor>-->
+                        <!--</configuration>-->
+                    <!--</execution>-->
                 </executions>
             </plugin>
 
             <!-- 上面的插件在执行package命令时不能将生成的dsl对象打到war/jar包中，所以加入下面的插件 -->
-            <plugin>
-                <groupId>com.querydsl</groupId>
-                <artifactId>querydsl-maven-plugin</artifactId>
-                <version>4.2.1</version>
-                <executions>
-                    <execution>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>jpa-export</goal>
-                        </goals>
-                        <configuration>
-                            <targetFolder>target/generated-sources/java</targetFolder>
-                            <packages>
-                                org.pyf.developer.bean.one.model.auth
-                            </packages>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+            <!--<plugin>-->
+                <!--<groupId>com.querydsl</groupId>-->
+                <!--<artifactId>querydsl-maven-plugin</artifactId>-->
+                <!--<version>4.2.1</version>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<phase>generate-sources</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>jpa-export</goal>-->
+                        <!--</goals>-->
+                        <!--<configuration>-->
+                            <!--<targetFolder>target/generated-sources/java</targetFolder>-->
+                            <!--<packages>-->
+                                <!--org.pyf.developer.bean.one.model.auth-->
+                            <!--</packages>-->
+                        <!--</configuration>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+            <!--</plugin>-->
 
 
 
