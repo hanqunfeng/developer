@@ -23,6 +23,9 @@ brew install mongodb
 
 ### 启动：
 `mongod --config /usr/local/etc/mongod.conf`
+`mongod --config /usr/local/etc/mongod.conf --auth`
+
+* 带访问控制启动
 
 ### 关闭：
 `Ctrl+C`
@@ -30,10 +33,27 @@ brew install mongodb
 ### 登录：
 `mongo --host 127.0.0.1:27017`
 
-### 创建数据库
+* 带访问控制登录
+`mongo --host 127.0.0.1:27017 -utest -p123456 --authenticationDatabase test`
+
+### 创建或切换数据库
 `> use test;` 会创建名称为test的数据库
 
 ### 创建用户及分配角色
+* 管理员
+```
+> use admin
+
+> db.createUser(
+   {
+     user: "adminUser",
+     pwd: "adminPass",
+     roles: [ { role: "userAdminAnyDatabase", db: "admin" } ]
+   }
+ )
+```
+
+* 普通用户
 ```shell
 > db.createUser(
    {
