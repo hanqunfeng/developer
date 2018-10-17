@@ -23,9 +23,12 @@ brew install mongodb
 
 ### 启动：
 `mongod --config /usr/local/etc/mongod.conf`
-`mongod --config /usr/local/etc/mongod.conf --auth`
 
 * 带访问控制启动
+```
+mongod --config /usr/local/etc/mongod.conf --auth
+```
+
 
 ### 关闭：
 `Ctrl+C`
@@ -34,7 +37,9 @@ brew install mongodb
 `mongo --host 127.0.0.1:27017`
 
 * 带访问控制登录
-`mongo --host 127.0.0.1:27017 -utest -p123456 --authenticationDatabase test`
+```
+mongo --host 127.0.0.1:27017 -utest -p123456 --authenticationDatabase test
+```
 
 ### 创建或切换数据库
 `> use test;` 会创建名称为test的数据库
