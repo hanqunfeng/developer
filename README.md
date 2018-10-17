@@ -45,7 +45,7 @@ brew install mongodb
 ```
 
 ### 退出登录
-`Ctrl+C`
+`Ctrl+C` 或者 `> exit`
 
 
 ## RabbitMQ
