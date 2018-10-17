@@ -18,6 +18,7 @@
         <module>rabbitmq</module>
         <module>rabbitmq-provider</module>
         <module>rabbitmq-consumer</module>
+        <module>dao-mongo</module>
     </modules>
     <packaging>pom</packaging>
 

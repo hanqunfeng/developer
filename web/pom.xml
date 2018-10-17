@@ -160,6 +160,13 @@
             <groupId>org.pyf</groupId>
         </dependency>
 
+        <!--加入mongo-dao-->
+        <dependency>
+            <artifactId>developer-dao-mongo</artifactId>
+            <version>0.0.1</version>
+            <groupId>org.pyf</groupId>
+        </dependency>
+
 
 
 

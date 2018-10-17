@@ -1,21 +1,25 @@
-package org.pyf.developer.web.controller.rabbitmq;
+package org.pyf.developer.web.rabbitmq;
 
+import lombok.extern.slf4j.Slf4j;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.pyf.developer.bean.one.model.auth.SystemUser;
 import org.pyf.developer.rabbitmq.CP_MessageEntity;
 import org.pyf.developer.service.auth.ISystemUserService;
 import org.pyf.developer.service.rabbitmq.CP_IMessageSevice;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 /**
  * ${DESCRIPTION}
- * Created by hanqf on 2018/10/16 14:50.
+ * Created by hanqf on 2018/10/17 15:42.
  */
 
-@RestController
-@RequestMapping("/rabbitmq")
-public class DemoController {
+@RunWith(SpringRunner.class)
+@SpringBootTest
+@Slf4j
+public class RabbitMQTests {
 
     /**
      * 消息队列 - 消息提供者 注入
@@ -27,32 +31,25 @@ public class DemoController {
 
     /**
      * 测试发送消息队列方法
-     *
-     * @return
      */
-    @RequestMapping(value = "/index")
-    public String index() {
+    @Test
+    public void test1(){
         CP_MessageEntity<SystemUser> messageEntity =  new CP_MessageEntity();
         messageEntity.setContent("SystemUser");
         messageEntity.setObject(systemUserService.findById("admin"));
         // 将实体实例写入消息队列
         messageSevice.sendMessage(messageEntity);
-        return "Success";
     }
-
 
     /**
      * 测试发送延迟消息队列方法
-     *
-     * @return
      */
-    @RequestMapping(value = "/delay")
-    public String delay() {
+    @Test
+    public void test2(){
         CP_MessageEntity<SystemUser> messageEntity =  new CP_MessageEntity();
         messageEntity.setContent("SystemUser");
         messageEntity.setObject(systemUserService.findById("admin"));
         // 将实体实例写入消息队列，延迟10秒
         messageSevice.sendMessage(messageEntity,10000);
-        return "Success delay";
     }
 }

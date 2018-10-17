@@ -49,7 +49,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         // 设置不拦截规则
-        web.ignoring().antMatchers("/rabbitmq/**","/checkcode/**","/resource/**","/**/*.jsp", "/access/sameLogin.do", "/**/*.json*", "/**/*.xml*", "/druid/**","/forgotPassword.do","/forgotPasswordEmail.do","/resetPassword.do");
+        web.ignoring().antMatchers("/logger**","/rabbitmq/**","/checkcode/**","/resource/**","/**/*.jsp", "/access/sameLogin.do", "/**/*.json*", "/**/*.xml*", "/druid/**","/forgotPassword.do","/forgotPasswordEmail.do","/resetPassword.do");
 
     }
 
