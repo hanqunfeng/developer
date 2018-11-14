@@ -19,6 +19,7 @@
         <module>rabbitmq-provider</module>
         <module>rabbitmq-consumer</module>
         <module>dao-mongo</module>
+        <module>uid-generator</module>
     </modules>
     <packaging>pom</packaging>
 
