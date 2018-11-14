@@ -19,6 +19,7 @@
             <version>1.3.2</version>
         </dependency>
 
+        <!--这个包只在本地，maven仓库上没有，对源码涉及的jar进行了升级，现已经传到github上了-->
         <dependency>
             <groupId>com.baidu.fsg</groupId>
             <artifactId>uid-generator</artifactId>
