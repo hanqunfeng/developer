@@ -31,7 +31,7 @@
 		 removeAbandonedTimeout="300" 设置超过300秒未使用则进行回收
 		 logAbandoned="true" 关闭abanded连接时输出错误日志
 		 以上三个配置用于避免连接池泄露，参考：https://github.com/alibaba/druid/wiki/连接泄漏监测-->
-	<Resource driverClassName="com.mysql.jdbc.Driver"
+	<Resource driverClassName="com.mysql.cj.jdbc.Driver"
 			  maxActive="100"  maxWait="60000"
 			  name="jdbc/mysql" password="cp2015"
 			  removeAbandoned="true"
