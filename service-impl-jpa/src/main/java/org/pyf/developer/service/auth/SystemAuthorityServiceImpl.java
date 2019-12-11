@@ -62,8 +62,9 @@ public class SystemAuthorityServiceImpl implements ISystemAuthorityService {
     @Override
     @CacheEvict(allEntries = true, beforeInvocation = true)
     public void delete(Long... ids) {
-        if (ArrayUtils.isEmpty(ids))
+        if (ArrayUtils.isEmpty(ids)) {
             return;
+        }
 
         QSystemAuthority qSystemAuthority = QSystemAuthority.systemAuthority;
         //封装查询条件
@@ -75,8 +76,9 @@ public class SystemAuthorityServiceImpl implements ISystemAuthorityService {
         if (CollectionUtils.isNotEmpty(results)) {
             for (Object obj : results) {
                 SystemAuthority tmpAuth = (SystemAuthority) obj;
-                if (CollectionUtils.isEmpty(tmpAuth.getRoles()))
+                if (CollectionUtils.isEmpty(tmpAuth.getRoles())) {
                     continue;
+                }
 
                 tmpAuth.setRoles(null);
             }
@@ -126,13 +128,16 @@ public class SystemAuthorityServiceImpl implements ISystemAuthorityService {
 
         List<BooleanExpression> predicateList = new ArrayList<>();
 
-        if (StringUtils.isNotBlank(example.getEntrance()))
+        if (StringUtils.isNotBlank(example.getEntrance())) {
             predicateList.add(qSystemAuthority.entrance.like("%" + example.getEntrance() + "%"));
-        if (StringUtils.isNotBlank(example.getDescription()))
+        }
+        if (StringUtils.isNotBlank(example.getDescription())) {
             predicateList.add(qSystemAuthority.description.like("%" + example
                     .getDescription() + "%"));
-        if (StringUtils.isNotBlank(example.getName()))
+        }
+        if (StringUtils.isNotBlank(example.getName())) {
             predicateList.add(qSystemAuthority.name.like("%" + example.getName() + "%"));
+        }
 
 
         Page<SystemAuthority> resultPage = systemAuthorityJpaRepository.findAll(predicateList, pageable);
@@ -169,14 +174,16 @@ public class SystemAuthorityServiceImpl implements ISystemAuthorityService {
     public Map<String, Set<String>> getUrlAuthorities() {
 
         List<SystemUrlResource> resources = systemUrlResourceJpaRepository.findAll();
-        if (CollectionUtils.isEmpty(resources))
+        if (CollectionUtils.isEmpty(resources)) {
             return null;
+        }
 
         Map<String, Set<String>> results = new HashMap<String, Set<String>>();
         for (SystemUrlResource resource : resources) {
             Set<String> auths = new HashSet<String>();
-            if (results.containsKey(resource.getUrlPattern()))
+            if (results.containsKey(resource.getUrlPattern())) {
                 auths = (Set<String>) results.get(resource.getUrlPattern());
+            }
             auths = auths == null ? new HashSet<String>() : auths;
             auths.add(AUTH_PREFIX + resource.getAuthority().getId());
             results.put(resource.getUrlPattern(), auths);

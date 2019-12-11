@@ -80,7 +80,7 @@ public class SystemRole implements java.io.Serializable {
 
 	public String getShowName(){
 
-		if(LocaleContextHolder.getLocale().getLanguage().equalsIgnoreCase("en")){
+		if("en".equalsIgnoreCase(LocaleContextHolder.getLocale().getLanguage())){
 			return this.nameEn;
 		}else{
 			return this.name;
@@ -88,10 +88,11 @@ public class SystemRole implements java.io.Serializable {
 	}
 
 	public String getAuthoritysHtmlString() {
-		if (CollectionUtils.isEmpty(authorities))
-			return "";
-		else
-			return StringUtils.join(authorities, ",\r");
+		if (CollectionUtils.isEmpty(authorities)) {
+            return "";
+        } else {
+            return StringUtils.join(authorities, ",\r");
+        }
 	}
 	
 	

@@ -191,10 +191,10 @@ public class CP_ImageUtils {
 			// 设置颜色
 			g.setColor(Color.red);
 
-			if (type == TYPE_TEXT) {
+			if (type.equals(TYPE_TEXT)) {
 				drawString(g, waterMarkContent, buffImgWidth, buffImgHeight,
 						clarity);
-			} else if (type == TYPE_IMAGE) {
+			} else if (type.equals(TYPE_IMAGE)) {
 				drawImage(g, waterMarkContent, buffImgWidth, buffImgHeight,
 						clarity);
 			}
@@ -209,15 +209,17 @@ public class CP_ImageUtils {
 					e);
 		} finally {
 			try {
-				if (null != is)
-					is.close();
+				if (null != is) {
+                    is.close();
+                }
 			} catch (Exception e) {
 				logger.error(
 						"CP_WatermarkUtils --> waterMarImagekByText关闭流异常:", e);
 			}
 			try {
-				if (null != os)
-					os.close();
+				if (null != os) {
+                    os.close();
+                }
 			} catch (Exception e) {
 				logger.error(
 						"CP_WatermarkUtils --> waterMarImagekByText关闭流异常:", e);

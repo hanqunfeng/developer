@@ -141,6 +141,7 @@ public class DefaultElfinderStorage implements ElfinderStorage {
 
     // getters and setters
 
+    @Override
     public List<VolumeSecurity> getVolumeSecurities() {
         return volumeSecurities;
     }
@@ -149,6 +150,7 @@ public class DefaultElfinderStorage implements ElfinderStorage {
         this.volumeSecurities = volumeSecurities;
     }
 
+    @Override
     public ThumbnailWidth getThumbnailWidth() {
         return thumbnailWidth;
     }
@@ -157,6 +159,7 @@ public class DefaultElfinderStorage implements ElfinderStorage {
         this.thumbnailWidth = thumbnailWidth;
     }
 
+    @Override
     public List<Volume> getVolumes() {
         return volumes;
     }

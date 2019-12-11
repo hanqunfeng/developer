@@ -56,12 +56,14 @@ public class CP_Sorter {
 	}
 
 	public Order getOrder() {
-		if (StringUtils.isBlank(sortName))
-			return null;
-		if (DESC.equalsIgnoreCase(sortType))
-			return Order.desc(sortName);
-		else
-			return Order.asc(sortName);
+		if (StringUtils.isBlank(sortName)) {
+            return null;
+        }
+		if (DESC.equalsIgnoreCase(sortType)) {
+            return Order.desc(sortName);
+        } else {
+            return Order.asc(sortName);
+        }
 	}
 
 }

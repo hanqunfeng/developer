@@ -80,7 +80,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
         // 自定义登录页面
         http
-            //.csrf().disable()//关闭csrf，如果默认开启scrf，则在生成页面时会自动在每个form中增加一个隐藏属性<input type="hidden" name="_csrf" value="95e8706b-8d22-4d62-9a27-3da5993e0a7d">，
+            .csrf().disable()//关闭csrf，如果默认开启scrf，则在生成页面时会自动在每个form中增加一个隐藏属性<input type="hidden" name="_csrf" value="95e8706b-8d22-4d62-9a27-3da5993e0a7d">，
                 // 实际上就是<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />，js中如果需要使用时也可以使用该属性
             .formLogin().loginPage("/login.do")
             .failureUrl("/login.do?login_error=1").defaultSuccessUrl("/index.do", true)
@@ -127,6 +127,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     }
 
+    @Override
     @Bean
     public CP_UserDetailsService userDetailsService() {
         logger.info("CP_UserDetailsService");

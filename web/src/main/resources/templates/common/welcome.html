@@ -1,16 +1,26 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <META http-equiv="Pragma" content="no-cache">
 <META http-equiv="Cache-Control" content="no-cache">
 <META http-equiv="Expire" content="0">
 <title></title>
+	<script th:src="@{/resource/js/jquery-1.11.0.min.js}"></script>
+</head>
 
 
 
 <body>
 	热烈欢迎!
+
+<script>
+    $(function(){
+       $.getJSON("http://hanqfdeMacbookPro.local:8080/esget/B7xbOWcB04ZYCw_097FX",function (data) {
+		   alert(data.content);
+       })
+    });
+</script>
 
 
 </body>

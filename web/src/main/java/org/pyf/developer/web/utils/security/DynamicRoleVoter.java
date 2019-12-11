@@ -30,6 +30,7 @@ public class DynamicRoleVoter extends SimpleBaseUserInfoService implements
 	 * org.springframework.security.vote.AccessDecisionVoter#supports(java.lang
 	 * .Class)
 	 */
+	@Override
 	public boolean supports(Class<?> clazz) {
 		return true;
 	}
@@ -40,6 +41,7 @@ public class DynamicRoleVoter extends SimpleBaseUserInfoService implements
 	 * @seeorg.springframework.security.vote.AccessDecisionVoter#supports(org.
 	 * springframework.security.ConfigAttribute)
 	 */
+	@Override
 	public boolean supports(ConfigAttribute attribute) {
 		return true;
 	}
@@ -51,12 +53,14 @@ public class DynamicRoleVoter extends SimpleBaseUserInfoService implements
 	 * springframework.security.Authentication, java.lang.Object,
 	 * org.springframework.security.ConfigAttributeDefinition)
 	 */
+	@Override
 	@SuppressWarnings("rawtypes")
 	public int vote(Authentication authentication, Object object,
 			Collection arg2) {
 		int result = ACCESS_ABSTAIN;
-		if (!(object instanceof FilterInvocation))
-			return result;
+		if (!(object instanceof FilterInvocation)) {
+            return result;
+        }
 		FilterInvocation invo = (FilterInvocation) object;
 		String url = invo.getRequestUrl();//当前请求的URL
 		Set<SimpleGrantedAuthority> authorities = null;
@@ -68,8 +72,9 @@ public class DynamicRoleVoter extends SimpleBaseUserInfoService implements
 			Set<String> keySet = urlAuths.keySet();
 			for (String key : keySet) {
 				boolean matched = pathMatcher.match(key, url);
-				if (!matched)
-					continue;
+				if (!matched) {
+                    continue;
+                }
 				Set<String> mappedAuths = urlAuths.get(key);
 				if (contain(authorities, mappedAuths)) {
 					result = ACCESS_GRANTED;
@@ -84,11 +89,13 @@ public class DynamicRoleVoter extends SimpleBaseUserInfoService implements
 	protected boolean contain(Set<SimpleGrantedAuthority> authorities,
 			Set<String> mappedAuths) {
 		if (CollectionUtils.isEmpty(mappedAuths)
-				|| CollectionUtils.isEmpty(authorities))
-			return false;
+				|| CollectionUtils.isEmpty(authorities)) {
+            return false;
+        }
 		for (SimpleGrantedAuthority item : authorities) {
-			if (mappedAuths.contains(item.getAuthority()))
-				return true;
+			if (mappedAuths.contains(item.getAuthority())) {
+                return true;
+            }
 		}
 		return false;
 	}

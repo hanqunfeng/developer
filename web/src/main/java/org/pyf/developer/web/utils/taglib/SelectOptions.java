@@ -50,6 +50,7 @@ public class SelectOptions extends TagSupport {
 
     private String value;//默认值
 
+    @Override
     public int doEndTag() throws JspException {
 
         StringBuffer outStr = new StringBuffer();
@@ -68,7 +69,9 @@ public class SelectOptions extends TagSupport {
             BindStatus bs = (BindStatus) pageContext.getAttribute("org.springframework.web.servlet.tags.form.SelectTag.listValue");
             if (bs != null) {
                 selectTagValue = bs.getValue();
-                if (selectTagValue != null) value = selectTagValue.toString();
+                if (selectTagValue != null) {
+                    value = selectTagValue.toString();
+                }
             }
 
 
@@ -78,16 +81,16 @@ public class SelectOptions extends TagSupport {
             String hql = "";
             if (po.indexOf("from") != -1) {//自行编写hql
                 hql += po;
-                if (order != null && !order.equals("")) {
+                if (order != null && !"".equals(order)) {
                     hql += " order by " + order;
                 }
             } else {
                 hql += "from " + po + " a ";
 
-                if (filter != null && !filter.equals("")) {
+                if (filter != null && !"".equals(filter)) {
                     hql += " where " + filter;
                 }
-                if (order != null && !order.equals("")) {
+                if (order != null && !"".equals(order)) {
                     hql += " order by a." + order;
                 }
             }
@@ -111,8 +114,9 @@ public class SelectOptions extends TagSupport {
                     outStr.append("\"");
                     if (value != null) {
                         if (value.equals(BeanUtils.getProperty(list.get(i),
-                                truevalue)))
+                                truevalue))) {
                             outStr.append(" selected");
+                        }
                     }
                     outStr.append(">");
                     outStr.append(BeanUtils.getProperty(list.get(i), showtext));

@@ -102,8 +102,9 @@ public class SystemAuthority implements java.io.Serializable {
 	
 
 	public void addResource(SystemUrlResource resource) {
-		if (this.resources == null)
-			resources = new HashSet<SystemUrlResource>();
+		if (this.resources == null) {
+            resources = new HashSet<SystemUrlResource>();
+        }
 		resources.add(resource);
 	}
 
@@ -136,10 +137,11 @@ public class SystemAuthority implements java.io.Serializable {
 	}
 
 	public String getResourceHtmlString() {
-		if (CollectionUtils.isEmpty(resources))
-			return "";
-		else
-			return StringUtils.join(resources, ",\r");
+		if (CollectionUtils.isEmpty(resources)) {
+            return "";
+        } else {
+            return StringUtils.join(resources, ",\r");
+        }
 	}
 
 	public Set<SystemUrlResource> getResources() {
@@ -151,7 +153,7 @@ public class SystemAuthority implements java.io.Serializable {
 	}
 
 	public String getShowName(){
-		if(LocaleContextHolder.getLocale().getLanguage().equalsIgnoreCase("en")){
+		if("en".equalsIgnoreCase(LocaleContextHolder.getLocale().getLanguage())){
 			return this.nameEn;
 		}else{
 			return this.name;
@@ -218,6 +220,7 @@ public class SystemAuthority implements java.io.Serializable {
 		}
 	}
 
+	@Override
 	public String toString() {
 		return StringUtils.defaultIfEmpty(name, "") + "--"
 				+ StringUtils.defaultIfEmpty(entrance, "");

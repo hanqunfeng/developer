@@ -217,12 +217,15 @@ public class CP_CryptUtils_Base64 {
  
         } finally {
             try {
-                if (fis != null)
+                if (fis != null) {
                     fis.close();
-                if (is != null)
+                }
+                if (is != null) {
                     is.close();
-                if (baos != null)
+                }
+                if (baos != null) {
                     baos.close();
+                }
             } catch (Exception e) {
             	logger.error("",e);
             }
@@ -248,12 +251,15 @@ public class CP_CryptUtils_Base64 {
  
         } finally {
             try {
-                if (caw != null)
+                if (caw != null) {
                     caw.close();
-                if (in != null)
+                }
+                if (in != null) {
                     in.close();
-                if (fr != null)
+                }
+                if (fr != null) {
                     fr.close();
+                }
             } catch (Exception e) {
             	logger.error("",e);
             }
@@ -272,10 +278,12 @@ public class CP_CryptUtils_Base64 {
  
         } finally {
             try {
-                if (os != null)
+                if (os != null) {
                     os.close();
-                if (fos != null)
+                }
+                if (fos != null) {
                     fos.close();
+                }
             } catch (Exception e) {
             	logger.error("",e);
             }
@@ -292,10 +300,12 @@ public class CP_CryptUtils_Base64 {
  
         } finally {
             try {
-                if (os != null)
+                if (os != null) {
                     os.close();
-                if (fos != null)
+                }
+                if (fos != null) {
                     fos.close();
+                }
             } catch (Exception e) {
             	logger.error("",e);
             }

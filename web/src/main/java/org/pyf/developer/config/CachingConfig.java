@@ -39,7 +39,7 @@ import java.util.Set;
 @Configuration
 @EnableCaching//<!-- 启用缓存注解 --> <cache:annotation-driven cache-manager="cacheManager" />
 @Slf4j
-public class CachingConfig {
+public class CachingConfig{
 
 
 

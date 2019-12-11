@@ -108,13 +108,13 @@ public class CP_BufferImageServlet extends HttpServlet {
         String baseNum = "123456789";
         String baseLetter = "ABCDEFGHJKLMNPQRSTUVWXYZ";
         if ( createTypeFlag != null  && createTypeFlag.length() > 0 ) {
-            if( createTypeFlag.equals("nl") ) {
+            if("nl".equals(createTypeFlag)) {
                 //截取数字和字母的组合
                 return createRandomChar((Graphics2D) g,baseNumLetter);
-            } else if ( createTypeFlag.equals("n") ) {
+            } else if ("n".equals(createTypeFlag)) {
                 //截取数字的组合
                 return createRandomChar((Graphics2D) g,baseNum);
-            } else if ( createTypeFlag.equals("l") ) {
+            } else if ("l".equals(createTypeFlag)) {
                 //截取字母的组合
                 return createRandomChar((Graphics2D) g,baseLetter);
             }

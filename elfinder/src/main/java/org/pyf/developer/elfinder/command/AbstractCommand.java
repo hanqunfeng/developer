@@ -138,8 +138,9 @@ public abstract class AbstractCommand implements ElfinderCommand {
             cwd = findTarget(elfinderStorage, target);
         }
 
-        if (cwd == null)
+        if (cwd == null) {
             cwd = new VolumeHandler(elfinderStorage.getVolumes().get(0).getRoot(), elfinderStorage);
+        }
 
         return cwd;
     }
@@ -157,8 +158,9 @@ public abstract class AbstractCommand implements ElfinderCommand {
             List<Target> targets = new ArrayList<>(targetHashes.length);
             for (String targetHash : targetHashes) {
                 Target target = elfinderStorage.fromHash(targetHash);
-                if (target != null)
+                if (target != null) {
                     targets.add(target);
+                }
             }
             return targets;
         }

@@ -31,12 +31,12 @@
  */
 package org.pyf.developer.elfinder.command;
 
-import org.pyf.developer.elfinder.ElFinderConstants;
-import org.pyf.developer.elfinder.service.ElfinderStorage;
-import org.pyf.developer.elfinder.service.VolumeHandler;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.fileupload.FileItemStream;
 import org.apache.commons.io.IOUtils;
+import org.pyf.developer.elfinder.ElFinderConstants;
+import org.pyf.developer.elfinder.service.ElfinderStorage;
+import org.pyf.developer.elfinder.service.VolumeHandler;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
@@ -48,7 +48,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
+import static java.util.regex.Pattern.compile;
 
 public class UploadCommand extends AbstractJsonCommand implements ElfinderCommand {
 
@@ -165,10 +166,11 @@ public class UploadCommand extends AbstractJsonCommand implements ElfinderComman
                 totalSize += part._size;
             }
 
-            if (totalSize != _totalSize)
+            if (totalSize != _totalSize) {
                 throw new IOException(String.format(
                         "invalid file size: excepted %d, but is %d",
                         _totalSize, totalSize));
+            }
         }
 
         public void removeFromApplicationContext(HttpServletRequest request)
@@ -232,7 +234,7 @@ public class UploadCommand extends AbstractJsonCommand implements ElfinderComman
         String range = request.getParameter("range");
         String[] tokens = range.split(",");
 
-        Matcher m = Pattern.compile("(.*)\\.([0-9]+)\\_([0-9]+)\\.part")
+        Matcher m = compile("(.*)\\.([0-9]+)\\_([0-9]+)\\.part")
                 .matcher(chunk);
 
         if (m.find())

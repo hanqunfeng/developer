@@ -38,18 +38,21 @@ public class Write extends TagSupport {
 
 
 
+	@Override
 	@SuppressWarnings("rawtypes")
 	public int doEndTag() throws JspException {
 
 		
 		try {
-			if(value==null || value.equals("")) return EVAL_PAGE ;
+			if(value==null || "".equals(value)) {
+                return EVAL_PAGE ;
+            }
 			
 			
 			
 			String hql="from "+po+" a ";
 			
-	        if(type!=null&&!type.equals(""))
+	        if(type!=null&&!"".equals(type))
 	            {
 	                hql+=" where a."+truevalue+"="+value;
 	            }
@@ -77,7 +80,7 @@ public class Write extends TagSupport {
 			if(str!=null){
 				
 				
-                if(type!=null&&(type.equalsIgnoreCase("html")))
+                if(type!=null&&("html".equalsIgnoreCase(type)))
                 {
                     str=str.replace("<","&lt;");
                     str=str.replace(">","&gt;");
@@ -86,7 +89,7 @@ public class Write extends TagSupport {
                     str=str.replace("\"","&quot;");
                     str=str.replace((char)0x0D,' ');
                 }
-                else if(type!=null&&(type.equalsIgnoreCase("string")))
+                else if(type!=null&&("string".equalsIgnoreCase(type)))
                 {
                     //str=str.replace("","\\\"");
                     str=str.replace((char)0x0D,' ');

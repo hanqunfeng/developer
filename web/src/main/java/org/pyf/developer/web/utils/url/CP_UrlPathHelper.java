@@ -91,8 +91,9 @@ public class CP_UrlPathHelper extends org.springframework.web.util.UrlPathHelper
 		String path = url;
 		if (index >= 0) {
 			path = url.substring(0, index);
-			if (index < url.length() - 1)
-				queryString = url.substring(index + 1);
+			if (index < url.length() - 1) {
+                queryString = url.substring(index + 1);
+            }
 		}
 		for (Iterator<String> it = paras.keySet().iterator(); it.hasNext();) {
 			String paraName = it.next();

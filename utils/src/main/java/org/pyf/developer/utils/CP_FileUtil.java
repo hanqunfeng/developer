@@ -99,16 +99,19 @@ public class CP_FileUtil {
 					File fpath = new File(zfile.getParentFile().getPath());
 
 					if (zipEntry.isDirectory()) {
-						if (!zfile.exists())
-							zfile.mkdirs();
+						if (!zfile.exists()) {
+                            zfile.mkdirs();
+                        }
 					} else {
-						if (!fpath.exists())
-							fpath.mkdirs();
+						if (!fpath.exists()) {
+                            fpath.mkdirs();
+                        }
 						FileOutputStream fouts = new FileOutputStream(zfile);
 						InputStream in = zipFile.getInputStream(zipEntry);
 						int i;
-						while ((i = in.read(ch)) != -1)
-							fouts.write(ch, 0, i);
+						while ((i = in.read(ch)) != -1) {
+                            fouts.write(ch, 0, i);
+                        }
 						fouts.flush();
 						fouts.close();
 						in.close();

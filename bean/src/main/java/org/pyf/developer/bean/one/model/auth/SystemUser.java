@@ -95,8 +95,12 @@ public class SystemUser implements java.io.Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-		if(obj instanceof SystemUser == false) return false;
-		if(this == obj) return true;
+		if(obj instanceof SystemUser == false) {
+            return false;
+        }
+		if(this == obj) {
+            return true;
+        }
 		SystemUser other = (SystemUser)obj;
 		return new EqualsBuilder()
 				.append(getUserId(),other.getUserId())
@@ -114,8 +118,9 @@ public class SystemUser implements java.io.Serializable {
 				if (role != null) {
 					Set<SystemAuthority> auths = role.getAuthorities();
 					if (auths != null && auths.size() > 0) {
-						if (results == null)
-							results = new HashSet<String>();
+						if (results == null) {
+                            results = new HashSet<String>();
+                        }
 						for (SystemAuthority auth : role.getAuthorities()) {
 							results.add(auth.getEntrance().trim());
 						}
@@ -133,8 +138,9 @@ public class SystemUser implements java.io.Serializable {
 				if (role != null) {
 					Set<SystemAuthority> auths = role.getAuthorities();
 					if (auths != null && auths.size() > 0) {
-						if (results == null)
-							results = new HashSet<SystemAuthority>();
+						if (results == null) {
+                            results = new HashSet<SystemAuthority>();
+                        }
 						results.addAll(role.getAuthorities());
 					}
 				}

@@ -34,6 +34,7 @@ public class SystemAuthoritiesDataEditor extends PropertyEditorSupport {
 	 * 
 	 * @see java.beans.PropertyEditorSupport#setValue(java.lang.Object)
 	 */
+	@Override
 	public void setValue(Object value) {
 		if (value instanceof String[]) {
 			String[] authids = (String[]) value;
@@ -53,8 +54,9 @@ public class SystemAuthoritiesDataEditor extends PropertyEditorSupport {
 			auth.setId(NumberUtils.toLong((String) value));
 			auths.add(auth);
 			super.setValue(auths);
-		} else
-			super.setValue(value);
+		} else {
+            super.setValue(value);
+        }
 	}
 
 	/*
@@ -62,6 +64,7 @@ public class SystemAuthoritiesDataEditor extends PropertyEditorSupport {
 	 * 
 	 * @see java.beans.PropertyEditorSupport#setAsText(java.lang.String)
 	 */
+	@Override
 	public void setAsText(String text) {
 		SystemAuthority auth = new SystemAuthority();
 		auth.setId(NumberUtils.toLong(text));

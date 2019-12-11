@@ -111,8 +111,9 @@ public class ElfinderController extends CP_SimpleBaseController {
     }
 
     private HttpServletRequest processMultipartContent(final HttpServletRequest request) throws Exception {
-        if (!ServletFileUpload.isMultipartContent(request))
+        if (!ServletFileUpload.isMultipartContent(request)) {
             return request;
+        }
 
         Map<String,String[]> map = request.getParameterMap();
 

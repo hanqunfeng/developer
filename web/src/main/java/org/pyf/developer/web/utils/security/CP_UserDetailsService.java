@@ -50,6 +50,7 @@ public class CP_UserDetailsService extends SimpleBaseUserInfoService implements 
      * @seeorg.springframework.security.userdetails.UserDetailsService#
      * loadUserByUsername(java.lang.String)
      */
+    @Override
     @SuppressWarnings("unchecked")
     public UserDetails loadUserByUsername(String username)
             throws UsernameNotFoundException, DataAccessException {
@@ -58,14 +59,16 @@ public class CP_UserDetailsService extends SimpleBaseUserInfoService implements 
 
         SystemUser user = userService.findById(username);
         //userService.findById(username);
-        if (user == null)
+        if (user == null) {
             throw new UsernameNotFoundException("The user name " + username
                     + " can not be found!");
+        }
         Set<SimpleGrantedAuthority> auths = null;
-        if (userService.isReserved(username))
+        if (userService.isReserved(username)) {
             auths = this.loadAllAuthorities();
-        else
+        } else {
             auths = this.loadUserAuthorities(username);
+        }
 
         @SuppressWarnings("rawtypes")
         List<SimpleGrantedAuthority> resultAuths = auths == null ? new ArrayList()

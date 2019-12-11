@@ -84,8 +84,9 @@ public enum VolumeSources {
     }
 
     public Volume newInstance(String alias, String path) {
-        if (path == null || path.trim().isEmpty())
+        if (path == null || path.trim().isEmpty()) {
             throw new VolumeSourceException("Volume source path not informed");
+        }
         return getVolumeBuilder(alias, path).build();
     }
 

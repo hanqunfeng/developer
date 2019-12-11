@@ -71,12 +71,13 @@ public class MessageOptions extends TagSupport {
 		this.key = key;
 	}
 
-    public int doEndTag() throws JspException {
+    @Override
+	public int doEndTag() throws JspException {
 
 	LocalizationContext locCtxt = null;
 	value = null;
 
-	if ((key == null) || key.equals("")) {
+	if ((key == null) || "".equals(key)) {
 	    try {
 		pageContext.getOut().print("??????");
 	    } catch (IOException ioe) {
@@ -101,7 +102,9 @@ public class MessageOptions extends TagSupport {
 	BindStatus bs = (BindStatus)pageContext.getAttribute("org.springframework.web.servlet.tags.form.SelectTag.listValue");
 	if(bs!=null){
 		selectTagValue = bs.getValue();
-	if(selectTagValue!=null) value = selectTagValue.toString();
+	if(selectTagValue!=null) {
+        value = selectTagValue.toString();
+    }
 	}
     
  	String message = UNDEFINED_KEY + key + UNDEFINED_KEY;
@@ -111,8 +114,9 @@ public class MessageOptions extends TagSupport {
 	    if (bundle != null) {
 		try {
 		    // prepend 'prefix' attribute from parent bundle
-		    if (prefix != null)
-			key = prefix + key;
+		    if (prefix != null) {
+                key = prefix + key;
+            }
 		    message = bundle.getString(key);
 		    // Perform parametric replacement if required
 		} catch (MissingResourceException mre) {
@@ -126,7 +130,9 @@ public class MessageOptions extends TagSupport {
 	StringBuffer results = new StringBuffer();
 	String keyPrefix = getKeyPrefix(key);
 	for(String option:options){
-		if(ArrayUtils.contains(excludes, option)) continue;
+		if(ArrayUtils.contains(excludes, option)) {
+            continue;
+        }
 		String newKey = keyPrefix+option;
 		if(value!=null&&value.equals(option)){
 			results.append("<option value='"+option+"' selected >"+bundle.getString(newKey)+"</option>");

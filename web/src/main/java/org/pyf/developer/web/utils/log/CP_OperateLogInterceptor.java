@@ -226,15 +226,18 @@ public class CP_OperateLogInterceptor implements HandlerInterceptor {
      * @return 描述信息
      */
     protected String handleDescription(String key, String defaultMessage) {
-        if (messageSource == null)
+        if (messageSource == null) {
             return defaultMessage;
-        if (!StringUtils.hasText(key))
+        }
+        if (!StringUtils.hasText(key)) {
             return defaultMessage;
+        }
         String message = messageSource.getMessage(key, new Object[] {}, defaultMessage, LocaleContextHolder.getLocale());
-        if (!StringUtils.hasText(message))
+        if (!StringUtils.hasText(message)) {
             return defaultMessage;
-        else
+        } else {
             return message;
+        }
     }
 
 }

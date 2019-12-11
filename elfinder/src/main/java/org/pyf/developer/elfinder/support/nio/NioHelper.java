@@ -287,6 +287,7 @@ public final class NioHelper {
     public static List<Path> listChildrenNotHidden(Path dir) throws IOException {
         // not hidden file filter
         DirectoryStream.Filter<Path> notHiddenFilter = new DirectoryStream.Filter<Path>() {
+            @Override
             public boolean accept(Path path) throws IOException {
                 return !Files.isHidden(path);
             }

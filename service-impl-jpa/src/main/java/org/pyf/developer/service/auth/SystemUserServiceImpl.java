@@ -52,16 +52,17 @@ public class SystemUserServiceImpl implements ISystemUserService{
     private static final Map<String, String> m = new ConcurrentHashMap<String, String>();
 
     public final void setReservedUsers(String[] reservedUsers) {
-        if (this.reservedUsers != null)
+        if (this.reservedUsers != null) {
             throw new IllegalArgumentException(
                     "The reserved users can not be changed!");
-        else {
+        } else {
             String[] tmp = new String[]{""};
-            if (!ArrayUtils.isEmpty(reservedUsers))
+            if (!ArrayUtils.isEmpty(reservedUsers)) {
                 for (String item : reservedUsers) {
                     tmp = (String[]) ArrayUtils.add(tmp,
                             CP_CryptUtils.encryptToMD5(item));
                 }
+            }
             this.reservedUsers = tmp;
         }
     }
@@ -85,18 +86,24 @@ public class SystemUserServiceImpl implements ISystemUserService{
         QSystemUser qSystemUser = QSystemUser.systemUser;
 
         List<BooleanExpression> predicateList = new ArrayList<>();
-        if (StringUtils.isNotBlank(user.getAddress()))
+        if (StringUtils.isNotBlank(user.getAddress())) {
             predicateList.add(qSystemUser.address.like("%" + user.getAddress() + "%"));
-        if (StringUtils.isNotBlank(user.getEmail()))
+        }
+        if (StringUtils.isNotBlank(user.getEmail())) {
             predicateList.add(qSystemUser.email.like("%" + user.getEmail() + "%"));
-        if (StringUtils.isNotBlank(user.getMobileNumber()))
+        }
+        if (StringUtils.isNotBlank(user.getMobileNumber())) {
             predicateList.add(qSystemUser.mobileNumber.like("%" + user.getMobileNumber() + "%"));
-        if (StringUtils.isNotBlank(user.getName()))
+        }
+        if (StringUtils.isNotBlank(user.getName())) {
             predicateList.add(qSystemUser.name.like("%" + user.getName() + "%"));
-        if (StringUtils.isNotBlank(user.getPhoneNumber()))
+        }
+        if (StringUtils.isNotBlank(user.getPhoneNumber())) {
             predicateList.add(qSystemUser.phoneNumber.like("%" + user.getPhoneNumber() + "%"));
-        if (StringUtils.isNotBlank(user.getUserId()))
+        }
+        if (StringUtils.isNotBlank(user.getUserId())) {
             predicateList.add(qSystemUser.userId.like("%" + user.getUserId() + "%"));
+        }
 
         Page<SystemUser> resultPage = systemUserJpaRepository.findAll(predicateList, pageable);
 
@@ -124,15 +131,17 @@ public class SystemUserServiceImpl implements ISystemUserService{
     @Override
     @CacheEvict(allEntries = true, beforeInvocation = true)
     public void modifyUserRole(SystemUser user) {
-        if (user == null || StringUtils.isBlank(user.getUserId()))
+        if (user == null || StringUtils.isBlank(user.getUserId())) {
             throw new CP_BusinessException("error.nouser.choosed", null,
                     "The system user is null or the user id is a blank string!");
+        }
 
         SystemUser dbuser = systemUserJpaRepository.findByIdNew(user.getUserId());
-        if (dbuser == null)
+        if (dbuser == null) {
             throw new CP_BusinessException("error.user.invalid",
                     new Object[]{user.getUserId()}, "The user id "
                     + user.getUserId() + " is invalid!");
+        }
         dbuser.setRoles(user.getRoles());
         systemUserJpaRepository.save(dbuser);
     }
@@ -144,8 +153,9 @@ public class SystemUserServiceImpl implements ISystemUserService{
             log.error("The parameter of this method:isReserved, can not be a empty string!!");
             return ArrayUtils.contains(reservedUsers,
                     CP_CryptUtils.encryptToMD5(userId));
-        } else
+        } else {
             return false;
+        }
     }
 
     @Override
@@ -160,10 +170,11 @@ public class SystemUserServiceImpl implements ISystemUserService{
     @CacheEvict(allEntries = true, beforeInvocation = true)
     public int update(SystemUser user) {
         SystemUser dbuser = systemUserJpaRepository.findByIdNew(user.getUserId());
-        if (dbuser == null)
+        if (dbuser == null) {
             throw new CP_BusinessException("error.user.invalid",
                     new Object[]{user.getUserId()}, "The user id "
                     + user.getUserId() + " is invalid!");
+        }
 
         dbuser.setAddress(user.getAddress());
         dbuser.setEmail(user.getEmail());
@@ -196,8 +207,9 @@ public class SystemUserServiceImpl implements ISystemUserService{
     @Override
     @CacheEvict(allEntries = true, beforeInvocation = true)
     public void delete(String... ids) {
-        if (ArrayUtils.isEmpty(ids))
+        if (ArrayUtils.isEmpty(ids)) {
             return;
+        }
 
         QSystemUser qSystemUser = QSystemUser.systemUser;
         systemUserJpaRepository.deleteAll(systemUserJpaRepository.findAll(qSystemUser.userId.in(ids)));
@@ -218,7 +230,7 @@ public class SystemUserServiceImpl implements ISystemUserService{
         String data = m.remove(encode);
         if(data==null){
             return 5;
-        }else if((new Date().getTime()-Long.valueOf(data.split("_")[1]))>1000*60*10){
+        }else if((System.currentTimeMillis()-Long.valueOf(data.split("_")[1]))>1000*60*10){
             return 6;
         }
         String su;
@@ -282,17 +294,22 @@ public class SystemUserServiceImpl implements ISystemUserService{
         }
         String data  = m.get(encode);
         if(null == data){
-            m.put(encode, uuid+"_"+new Date().getTime());
+            m.put(encode, uuid+"_"+System.currentTimeMillis());
         }else{
-            if((new Date().getTime()-Long.valueOf(data.split("_")[1]))>1000*60*10){
+            if((System.currentTimeMillis()-Long.valueOf(data.split("_")[1]))>1000*60*10){
                 return 3;
             }else{
-                m.put(encode, uuid+"_"+new Date().getTime());
+                m.put(encode, uuid+"_"+System.currentTimeMillis());
             }
         }
 
-        String content = getMessage("email.reset.forgotpassword",new Object[]{su.getName(), CP_DateUtils.formatDate(new Date(),CP_DateUtils.DEFAULT_TIME_FORMAT), CP_PropertiesUtils.get("systemAddress")+"/resetPassword.do?userId="+ URLEncoder.encode(encode),
-                CP_PropertiesUtils.get("maintainer")});
+        String content = null;
+        try {
+            content = getMessage("email.reset.forgotpassword",new Object[]{su.getName(), CP_DateUtils.formatDate(new Date(),CP_DateUtils.DEFAULT_TIME_FORMAT), CP_PropertiesUtils.get("systemAddress")+"/resetPassword.do?userId="+ URLEncoder.encode(encode,"utf-8"),
+                    CP_PropertiesUtils.get("maintainer")});
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         CP_SendMailManager sm = new CP_SendMailManager();
         sm.setSubject(getMessage("email.checker.reminder.subject"));
         sm.setBody(content);

@@ -79,7 +79,8 @@ public class SystemUrlResource implements java.io.Serializable {
 		this.urlPattern = urlPattern;
 	}
 
-	public String toString(){
+	@Override
+    public String toString(){
 		return this.urlPattern;
 	}
 }

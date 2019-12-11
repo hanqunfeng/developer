@@ -33,6 +33,10 @@ public class CP_DateUtils {
 	public final static String DEFAULT_DATE_FORMAT = "yyyyMMdd";
 	public final static String DEFAULT_DATE_FORMAT_S = "yyyy-MM-dd";
 
+	public static void main(String[] args) {
+		
+	}
+
 	/**
 	 * 
 	 * 描述 : <转换称sql.date>. <br>

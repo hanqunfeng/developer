@@ -58,8 +58,9 @@ public class SystemAccessTypeServiceImpl implements ISystemAccessTypeService {
     @Override
     @CacheEvict(allEntries = true, beforeInvocation = true)
     public void delete(Long... ids) {
-        if (ArrayUtils.isEmpty(ids))
+        if (ArrayUtils.isEmpty(ids)) {
             return;
+        }
 
         QSystemAccessType qSystemAccessType = QSystemAccessType.systemAccessType;
         //封装查询条件
@@ -109,11 +110,13 @@ public class SystemAccessTypeServiceImpl implements ISystemAccessTypeService {
 
         List<BooleanExpression> predicateList = new ArrayList<>();
 
-        if (StringUtils.isNotBlank(example.getName()))
+        if (StringUtils.isNotBlank(example.getName())) {
             predicateList.add(qSystemAccessType.name.like("%" + example.getName() + "%"));
-        if (StringUtils.isNotBlank(example.getCode()))
+        }
+        if (StringUtils.isNotBlank(example.getCode())) {
             predicateList.add(qSystemAccessType.code.like("%" + example
                     .getCode() + "%"));
+        }
 
 
         Page<SystemAccessType> resultPage = systemAccessTypeJpaRepository.findAll(predicateList, pageable);

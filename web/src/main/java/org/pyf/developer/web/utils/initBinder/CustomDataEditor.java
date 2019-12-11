@@ -47,6 +47,7 @@ public class CustomDataEditor extends PropertyEditorSupport {
         this.attr = attr;
     }
 
+    @Override
     public void setValue(Object value) {
         if (value instanceof String[]) {
             String[] roleids = (String[]) value;
@@ -98,8 +99,9 @@ public class CustomDataEditor extends PropertyEditorSupport {
             }
 
             super.setValue(set);
-        } else
+        } else {
             super.setValue(value);
+        }
     }
 
     /*
@@ -107,6 +109,7 @@ public class CustomDataEditor extends PropertyEditorSupport {
      *
      * @see java.beans.PropertyEditorSupport#setAsText(java.lang.String)
      */
+    @Override
     @SuppressWarnings("rawtypes")
     public void setAsText(String text) {
         Set set = new HashSet();

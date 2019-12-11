@@ -1,6 +1,6 @@
 package org.pyf.developer.web.service.elfinder;
 
-import org.apache.commons.beanutils.BeanUtils;
+
 import org.pyf.developer.elfinder.ElFinderConstants;
 import org.pyf.developer.elfinder.core.Volume;
 import org.pyf.developer.elfinder.core.VolumeSecurity;
@@ -16,6 +16,7 @@ import org.pyf.developer.elfinder.service.impl.DefaultElfinderStorage;
 import org.pyf.developer.elfinder.service.impl.DefaultElfinderStorageFactory;
 import org.pyf.developer.elfinder.service.impl.DefaultThumbnailWidth;
 import org.pyf.developer.elfinder.support.locale.LocaleUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -28,6 +29,7 @@ import java.util.*;
  * Created by hanqf on 2018/9/21 18:15.
  */
 
+@SuppressWarnings("AlibabaAvoidApacheBeanUtilsCopy")
 @Service
 public class ElfinderService {
 

@@ -36,7 +36,7 @@ public class BaseSpecs {
                 try {
                     Method[] ms = type.getMethods();
                     for (Method mt : ms) {
-                        if (mt.getName().equals("getAutoPredicate")) {
+                        if ("getAutoPredicate".equals(mt.getName())) {
                             predicateList = (List<Predicate>) mt.invoke(example, predicateList, root, criteriaBuilder);
                             check = false;
                         }

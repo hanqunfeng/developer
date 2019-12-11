@@ -73,10 +73,12 @@ public class SystemRoleServiceImpl implements ISystemRoleService {
 
         List<BooleanExpression> predicateList = new ArrayList<>();
 
-        if (StringUtils.isNotBlank(example.getDescription()))
+        if (StringUtils.isNotBlank(example.getDescription())) {
             predicateList.add(qSystemRole.description.like("%" + example.getDescription() + "%"));
-        if (StringUtils.isNotBlank(example.getName()))
+        }
+        if (StringUtils.isNotBlank(example.getName())) {
             predicateList.add(qSystemRole.name.like("%" + example.getName() + "%"));
+        }
         if (StringUtils.isNotBlank(authname)) {
             predicateList.add(qSystemRole.authorities.any().name.like("%" + authname + "%"));
         }
@@ -118,9 +120,10 @@ public class SystemRoleServiceImpl implements ISystemRoleService {
     @CacheEvict(allEntries = true, beforeInvocation = true)
     public void update(SystemRole role) {
         SystemRole dbrole = (SystemRole) daoService.merge(role);
-        if (dbrole.isReserved())
+        if (dbrole.isReserved()) {
             throw new CP_BusinessException("error.role.reserved", null,
                     "The reserved role can not be edited!");
+        }
         systemRoleJpaRepository.save(dbrole);
 
 
@@ -142,8 +145,9 @@ public class SystemRoleServiceImpl implements ISystemRoleService {
 
     @Override
     public void delete(Long... ids) {
-        if (ArrayUtils.isEmpty(ids))
+        if (ArrayUtils.isEmpty(ids)) {
             return;
+        }
 
         QSystemRole qSystemRole = QSystemRole.systemRole;
 
@@ -154,15 +158,17 @@ public class SystemRoleServiceImpl implements ISystemRoleService {
 
         List<SystemRole> results = systemRoleJpaRepository.findAll(predicateList);
 
-        if (CollectionUtils.isNotEmpty(results))
+        if (CollectionUtils.isNotEmpty(results)) {
             for (Object obj : results) {
                 SystemRole tmpRole = (SystemRole) obj;
-                if (CollectionUtils.isEmpty(tmpRole.getUsers()))
+                if (CollectionUtils.isEmpty(tmpRole.getUsers())) {
                     continue;
+                }
                 for (SystemUser user : tmpRole.getUsers()) {
                     user.getRoles().remove(tmpRole);
                 }
             }
+        }
 
         systemRoleJpaRepository.deleteAll(results);
     }

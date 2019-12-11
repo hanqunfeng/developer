@@ -46,8 +46,9 @@ public class SimpleBaseUserInfoService {
 	 */
 	protected Set<SimpleGrantedAuthority> loadAllAuthorities() {
 		Set<String> auths = authService.getAuthoritiesAsPrefixAndId();
-		if (auths == null)
-			return null;
+		if (auths == null) {
+            return null;
+        }
 		Set<SimpleGrantedAuthority> results = new HashSet<SimpleGrantedAuthority>();
 		for (Iterator<String> it = auths.iterator(); it.hasNext();) {
 			results.add(new SimpleGrantedAuthority(it.next()));

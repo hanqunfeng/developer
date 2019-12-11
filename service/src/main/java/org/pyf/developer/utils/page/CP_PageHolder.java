@@ -23,7 +23,8 @@ package org.pyf.developer.utils.page;
  */
 public class CP_PageHolder {
 	private static ThreadLocal<CP_Page> locale = new ThreadLocal<CP_Page>() {
-		protected CP_Page initialValue() {
+		@Override
+        protected CP_Page initialValue() {
 			return new CP_Page(0, 15, 0);
 		}
 	};

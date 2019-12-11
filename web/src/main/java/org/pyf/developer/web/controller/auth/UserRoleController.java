@@ -205,7 +205,7 @@ public class UserRoleController extends CP_SimpleBaseController {
 		}
 
 
-		if(modify.equals("add")){//新增
+		if("add".equals(modify)){//新增
 			userService.insert(user);
 			redirectAttributes.addFlashAttribute("message","message.create.success");
 		}else{//修改

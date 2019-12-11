@@ -86,8 +86,9 @@ public class CP_SendMail1 implements CP_ISendMail {
 	 */
 	public void setNeedAuth(boolean need) {
 		// System.out.println("设置smtp身份认证：mail.smtp.auth = "+need);
-		if (props == null)
-			props = System.getProperties();
+		if (props == null) {
+            props = System.getProperties();
+        }
 		if (need) {
 			props.put("mail.smtp.auth", "true");
 		} else {
@@ -101,8 +102,9 @@ public class CP_SendMail1 implements CP_ISendMail {
 	 */
 	public void setSmtpHost(String hostName) {
 		// System.out.println("设置系统属性：mail.smtp.host = "+hostName);
-		if (props == null)
-			props = System.getProperties(); // 获得系统属性对象
+		if (props == null) {
+            props = System.getProperties(); // 获得系统属性对象
+        }
 
 		props.put("mail.smtp.host", hostName); // 设置SMTP主机
 	}
@@ -186,6 +188,7 @@ public class CP_SendMail1 implements CP_ISendMail {
 	 *            String
 	 *
 	 */
+	@Override
 	public boolean addFileAffix(String filename) {
 		// System.out.println("增加邮件附件："+filename);
 		try {
@@ -263,7 +266,7 @@ public class CP_SendMail1 implements CP_ISendMail {
 	 */
 	public static String decodeWord_s(String s) {
 		System.out.println("s========decode=" + s);
-		if (s == null || s.equals("")) {
+		if (s == null || "".equals(s)) {
 			return "";
 		}
 		if (!s.startsWith("=?")) {
@@ -272,29 +275,33 @@ public class CP_SendMail1 implements CP_ISendMail {
 		if (s.indexOf("=?") != -1) {
 			int i = 2;
 			int j;
-			if ((j = s.indexOf(63, i)) == -1)
-				return s;
+			if ((j = s.indexOf(63, i)) == -1) {
+                return s;
+            }
 			//String s1 = (s.substring(i, j));
 			i = j + 1;
-			if ((j = s.indexOf(63, i)) == -1)
-				return s;
+			if ((j = s.indexOf(63, i)) == -1) {
+                return s;
+            }
 			String s2 = s.substring(i, j);
 			i = j + 1;
-			if ((j = s.indexOf("?=", i)) == -1)
-				return s;
+			if ((j = s.indexOf("?=", i)) == -1) {
+                return s;
+            }
 			String s3 = s.substring(i, j);
 			try {
 				ByteArrayInputStream bytearrayinputstream = new ByteArrayInputStream(
 						s3.getBytes());
 				Object obj;
-				if (s2.equalsIgnoreCase("B"))
-					obj = new com.sun.mail.util.BASE64DecoderStream(
-							bytearrayinputstream);
-				else if (s2.equalsIgnoreCase("Q"))
-					obj = new com.sun.mail.util.QDecoderStream(
-							bytearrayinputstream);
-				else
-					return s;
+				if ("B".equalsIgnoreCase(s2)) {
+                    obj = new com.sun.mail.util.BASE64DecoderStream(
+                            bytearrayinputstream);
+                } else if ("Q".equalsIgnoreCase(s2)) {
+                    obj = new com.sun.mail.util.QDecoderStream(
+                            bytearrayinputstream);
+                } else {
+                    return s;
+                }
 				int k = bytearrayinputstream.available();
 				byte abyte0[] = new byte[k];
 				k = ((InputStream) (obj)).read(abyte0, 0, k);
@@ -327,8 +334,9 @@ public class CP_SendMail1 implements CP_ISendMail {
 	 */
 	@Override
 	public boolean setTo(String to) {
-		if (to == null)
-			return false;
+		if (to == null) {
+            return false;
+        }
 
 		try {
 			mimeMsg.setRecipients(Message.RecipientType.TO, InternetAddress
@@ -345,8 +353,9 @@ public class CP_SendMail1 implements CP_ISendMail {
 	 */
 	@Override
 	public boolean setTo(String[] to) {
-		if (to == null || to.length < 1)
-			return false;
+		if (to == null || to.length < 1) {
+            return false;
+        }
 
 		try {
 			InternetAddress[] toAddress = new InternetAddress[to.length];
@@ -366,8 +375,9 @@ public class CP_SendMail1 implements CP_ISendMail {
 	 */
 	@Override
 	public boolean setCopyTo(String copyto) {
-		if (copyto == null)
-			return false;
+		if (copyto == null) {
+            return false;
+        }
 		try {
 			mimeMsg.setRecipients(Message.RecipientType.CC,
 					(Address[]) InternetAddress.parse(copyto));
@@ -383,8 +393,9 @@ public class CP_SendMail1 implements CP_ISendMail {
 	 */
 	@Override
 	public boolean setCopyTo(String copyto[]) {
-		if (copyto == null || copyto.length < 1)
-			return false;
+		if (copyto == null || copyto.length < 1) {
+            return false;
+        }
 
 		try {
 			InternetAddress[] toAddress = new InternetAddress[copyto.length];

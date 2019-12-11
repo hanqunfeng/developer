@@ -37,10 +37,12 @@ public class CP_ResourceBundleViewResolver extends ResourceBundleViewResolver im
 
     public void setPackagename(String packagename) {
         packagename = StringUtils.trimToEmpty(packagename);
-        if (!packagename.equals(""))
+        if (!"".equals(packagename)) {
             this.packagename = packagename.replaceAll("\\.", "/");
-        if (!this.packagename.endsWith("/"))
+        }
+        if (!this.packagename.endsWith("/")) {
             this.packagename += "/";
+        }
     }
 
 
@@ -63,6 +65,7 @@ public class CP_ResourceBundleViewResolver extends ResourceBundleViewResolver im
 
 
 
+    @Override
     public void afterPropertiesSet()  {
         StringBuilder sb = new StringBuilder();
         sb.append(urlPrefix).append(packagename).append("**/")
@@ -115,8 +118,9 @@ public class CP_ResourceBundleViewResolver extends ResourceBundleViewResolver im
                 realName = realName.replaceAll(REG_EXP, "");
                 realName = realName.replaceAll("/", ".");
                 realName = realName.replaceAll("\\.properties", "");
-                if (!namesList.contains(realName))
+                if (!namesList.contains(realName)) {
                     namesList.add(realName);
+                }
             }
         }
         String[] resolvedBasenames = namesList.toArray(new String[] {});

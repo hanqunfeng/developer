@@ -85,8 +85,9 @@ public class BaseJpaRepositoryImpl<T, ID extends Serializable> extends QuerydslJ
     public T findByIdNew(ID id) {
         T t = null;
         Optional<T> optional = this.findById(id);
-        if(optional.isPresent())
+        if(optional.isPresent()) {
             t = optional.get();
+        }
 
         return t;
 
