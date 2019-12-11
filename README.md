@@ -1,6 +1,14 @@
 # developer
-发布项目代码
+项目基于Spring Boot开发，整体分为如下层次：
+* bean: model层
+* dao: 数据库层
+* service: 服务层
+* web: 页面层
+
+
+
 # 工具使用
+项目中用到的各个组件，可以参考下面的方式进行设置。
 ## Redis
 ```shell
 brew update
